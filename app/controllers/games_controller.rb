@@ -2,7 +2,7 @@ class GamesController < ApplicationController
   before_action :set_game, only: %i[show edit update]
 
   def index
-    @games = Games.all.order(id: :asc)
+    @games = Game.all.order(id: :asc)
   end
 
   def show; end
@@ -13,7 +13,6 @@ class GamesController < ApplicationController
 
   def create
     @game = Game.new(params_required)
-
     if @game.save
       redirect_to game_path(@game), notice: 'Game was successfully created!'
     else

@@ -19,7 +19,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_25_183635) do
     t.integer "players"
     t.integer "turn"
     t.json "moves"
-    t.datetime "time"
+    t.integer "time"
     t.integer "status"
     t.integer "theme"
     t.integer "mode"

@@ -5,7 +5,7 @@ class CreateGames < ActiveRecord::Migration[7.0]
       t.integer :players
       t.integer :turn
       t.json :moves
-      t.datetime :time
+      t.integer :time
       t.integer :status
       t.integer :theme
       t.integer :mode
