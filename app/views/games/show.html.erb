@@ -1,2 +1,10 @@
 <h1>Game</h1>
-<%= @game.state %>
+<% @game.state.each do |row| %>
+  <div class='row'>
+    <% row.each do |cell| %>
+    <div class="cell">
+      <%= cell %>
+    </div>
+    <% end %>
+  </div>
+<% end %>

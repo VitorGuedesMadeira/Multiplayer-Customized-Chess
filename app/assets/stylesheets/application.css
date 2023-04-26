@@ -13,3 +13,23 @@
  *= require_tree .
  *= require_self
  */
+
+.row {
+  display: flex;
+}
+
+.cell {
+  width: 5rem;
+  height: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.row:nth-child(2n) .cell:nth-child(2n) {
+  background-color: gray;
+}
+
+.row:nth-child(2n-1) .cell:nth-child(2n-1) {
+  background-color: gray;
+}
