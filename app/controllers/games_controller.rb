@@ -1,4 +1,10 @@
 class GamesController < ApplicationController
+  before_action :set_game, only: %i[show edit update]
+
+  def index
+    @games = Games.all.order(id: :asc)
+  end
+
   def show; end
 
   def new
@@ -20,6 +26,10 @@ class GamesController < ApplicationController
   def update; end
 
   private
+
+  def set_game
+    @game = Game.find(params[:id])
+  end
 
   def params_required
     params.require(:game).permit(:state, :players, :turn, :moves, :time, :status, :theme, :mode)
