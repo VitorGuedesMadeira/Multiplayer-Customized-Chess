@@ -1,6 +1,12 @@
+nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+}
+
 nav ul {
   list-style-type: none;
-  width: 10rem;
 }
 
 nav ul li {

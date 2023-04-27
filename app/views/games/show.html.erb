@@ -34,14 +34,29 @@
   </div>
 
   <div class="information">
-    <h1>Game</h1>
-    <p>Players: <%= @game.players %></p>
-    <p>Turn: <%= @game.turn === 0 ? "White" : "Black" %></p>
-    <p>Time: <%= @game.time %></p>
-    <p>Moves: <%= @game.moves %></p>
-    <p>Theme: <%= @game.theme %></p>
-    <p>Mode: <%= @game.mode %></p>
-    <p>Status: <%= @game.status %></p>
-    <%= link_to "Quit", root_path %>
+    <div>
+      <h1>Game</h1>
+      <p>Players: <%= @game.players %></p>
+      <p>Turn: <%= @game.turn === 0 ? "White" : "Black" %></p>
+      <p>Time: <%= @game.time %></p>
+    </div>
+
+    <div>
+      <p>Moves:</p>
+      <div id="moves">
+      <% if @game.moves %>
+        <% @game.moves.each do |move| %>
+          <p><%= move %></p>
+        <% end %>
+      <% end %>
+      </div>
+    </div>
+
+    <div>
+      <p>Theme: <%= @game.theme %></p>
+      <p>Mode: <%= @game.mode %></p>
+      <p>Status: <%= @game.status %></p>
+      <%= link_to "Surrender", games_path, class: "button2" %>
+    </div>
   </div>
 </div>

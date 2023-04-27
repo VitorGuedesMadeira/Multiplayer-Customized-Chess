@@ -1,9 +1,8 @@
 header {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   background-color: #272522;
   color: white;
   height: 100vh;
-  gap: 1rem;
+  width: 15%;
 }

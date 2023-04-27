@@ -1,1 +1,20 @@
-<%= link_to game.mode, game_path(game) %>
+<div class="mini-game">    
+  <div class="mini-board">
+    <% game.state.each do |row| %>
+    <div class='mini-row'>
+      <% row.each do |cell| %>
+        <div class="mini-cell">
+          <%= cell[0] %>
+        </div>
+      <% end %>
+    </div>
+    <% end %>
+  </div>
+
+  <div class="mini-game-info">
+    <p><%= link_to game.mode, game_path(game), class: "button1" %></p>
+    <p>Status: <%= game.status %></p>
+    <p>Mode: <%= game.mode %></p>
+    <p>Theme: <%= game.theme %></p>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+.mini-game-info {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  gap: 0.25rem;
+}

@@ -1,0 +1,7 @@
+#moves {
+  display: flex;
+  flex-direction: column;
+  background-color: #181715;
+  color: white;
+  border-radius: 0.25rem;
+}

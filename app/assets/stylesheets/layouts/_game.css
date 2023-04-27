@@ -1,6 +1,6 @@
 .game-container {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   min-height: 100vh;
   gap: 1rem;
