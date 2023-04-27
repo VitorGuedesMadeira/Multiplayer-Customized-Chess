@@ -1,0 +1,27 @@
+.board {
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.25rem;
+  overflow: hidden;
+}
+
+.row {
+  display: flex;
+}
+
+.cell {
+  width: 4rem;
+  height: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: whitesmoke;
+}
+
+.row:nth-child(2n) .cell:nth-child(2n) {
+  background-color: #769656;
+}
+
+.row:nth-child(2n-1) .cell:nth-child(2n-1) {
+  background-color: #769656;
+}

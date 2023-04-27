@@ -1,4 +1,38 @@
 <div class="game-container">
+  <div class="game">
+    <div class="player-info">
+      <div class="player">
+        <div class="player-image">Image</div>
+        <p>Player</p>
+      </div>
+      <div class="timer">
+        Timer
+      </div>
+    </div>
+
+    <div class="board">
+      <% @game.state.each do |row| %>
+        <div class='row'>
+          <% row.each do |cell| %>
+          <div class="cell">
+            <%= cell %>
+          </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="player-info">
+      <div class="player">
+        <div class="player-image">Image</div>
+        <p>Player</p>
+      </div>
+      <div class="timer">
+        Timer
+      </div>
+    </div>
+  </div>
+
   <div class="information">
     <h1>Game</h1>
     <p>Players: <%= @game.players %></p>
@@ -10,16 +44,4 @@
     <p>Status: <%= @game.status %></p>
     <%= link_to "Quit", root_path %>
   </div>
-
-  <div class="board">
-    <% @game.state.each do |row| %>
-      <div class='row'>
-        <% row.each do |cell| %>
-        <div class="cell">
-          <%= cell %>
-        </div>
-        <% end %>
-      </div>
-    <% end %>
-  </div>  
 </div>

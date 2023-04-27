@@ -42,8 +42,8 @@ class Game < ApplicationRecord
     if state[finishy][finishx].blank? || state[finishy][finishx].split('_')[1] != state[starty][startx].split('_')[1]
       state[finishy][finishx] = state[starty][startx]
       state[starty][startx] = ''
+      moves << [startx, starty, finishx, finishy]
     end
-
     save
   end
 end

@@ -1,0 +1,11 @@
+#games-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#games {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
