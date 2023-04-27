@@ -1,10 +1,25 @@
-<h1>Game</h1>
-<% @game.state.each do |row| %>
-  <div class='row'>
-    <% row.each do |cell| %>
-    <div class="cell">
-      <%= cell %>
-    </div>
-    <% end %>
+<div class="game-container">
+  <div class="information">
+    <h1>Game</h1>
+    <p>Players: <%= @game.players %></p>
+    <p>Turn: <%= @game.turn === 0 ? "White" : "Black" %></p>
+    <p>Time: <%= @game.time %></p>
+    <p>Moves: <%= @game.moves %></p>
+    <p>Theme: <%= @game.theme %></p>
+    <p>Mode: <%= @game.mode %></p>
+    <p>Status: <%= @game.status %></p>
+    <%= link_to "Quit", root_path %>
   </div>
-<% end %>
+
+  <div class="board">
+    <% @game.state.each do |row| %>
+      <div class='row'>
+        <% row.each do |cell| %>
+        <div class="cell">
+          <%= cell %>
+        </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>  
+</div>

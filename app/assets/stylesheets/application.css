@@ -14,22 +14,43 @@
  *= require_self
  */
 
+.game-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 1rem;
+  background-color: rgb(60, 73, 66);
+}
+
+.information {
+  background-color: rgb(20, 39, 26);
+  color: white;
+  padding: 1rem;
+}
+
+.board {
+  display: flex;
+  flex-direction: column;
+}
+
 .row {
   display: flex;
 }
 
 .cell {
-  width: 5rem;
-  height: 5rem;
+  width: 4rem;
+  height: 4rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: whitesmoke;
 }
 
 .row:nth-child(2n) .cell:nth-child(2n) {
-  background-color: gray;
+  background-color: seagreen;
 }
 
 .row:nth-child(2n-1) .cell:nth-child(2n-1) {
-  background-color: gray;
+  background-color: seagreen;
 }

@@ -7,6 +7,8 @@ class Game < ApplicationRecord
   attribute :theme, :integer, default: 0
   attribute :mode, :integer, default: 0
   attribute :turn, :integer, default: 0
+  attribute :status, :integer, default: 0
+  attribute :moves, :json, default: []
 
   enum time: { ten_minutes: 0, five_minutes: 1, one_minute: 2 }
   enum theme: { default: 0, harry_potter: 1, lotr: 2 }
