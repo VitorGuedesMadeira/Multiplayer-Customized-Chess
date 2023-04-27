@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  before_action :set_game, only: %i[show edit update]
+  before_action :set_game, only: %i[show edit update move_piece]
 
   def index
     @games = Game.all.order(id: :asc)
@@ -22,7 +22,15 @@ class GamesController < ApplicationController
 
   def edit; end
 
-  def update; end
+  def update
+
+  end
+
+  def move_piece
+    p "################################"
+    p params
+    @game.move(params[:currentx], params[:currenty], params[:targetx], params[:targety])
+  end
 
   private
 
