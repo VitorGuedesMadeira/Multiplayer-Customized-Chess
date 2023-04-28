@@ -22,14 +22,10 @@ class GamesController < ApplicationController
 
   def edit; end
 
-  def update
-
-  end
+  def update; end
 
   def move_piece
-    p "################################"
-    p params
-    @game.move(params[:currentx], params[:currenty], params[:targetx], params[:targety])
+    @game.move(params[:currentx].to_i, params[:currenty].to_i, params[:targetx].to_i, params[:targety].to_i)
   end
 
   private

@@ -10,6 +10,9 @@
   transition: 0.25s;
   box-shadow: 0.25rem 0.25rem 1rem rgba(0, 0, 0, 0.2);
   width: fit-content;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
 }
 
 .button1:hover {
@@ -28,6 +31,9 @@
   transition: 0.25s;
   box-shadow: 0.25rem 0.25rem 1rem rgba(0, 0, 0, 0.2);
   width: fit-content;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
 }
 
 .button2:hover {

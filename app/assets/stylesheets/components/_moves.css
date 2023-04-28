@@ -4,4 +4,6 @@
   background-color: #181715;
   color: white;
   border-radius: 0.25rem;
+  overflow: auto;
+  height: 10rem;
 }

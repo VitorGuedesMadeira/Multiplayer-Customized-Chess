@@ -39,7 +39,7 @@ class Game < ApplicationRecord
   end
 
   def move(startx, starty, finishx, finishy)
-    if state[finishy][finishx].blank? || state[finishy][finishx].split('_')[1] != state[starty][startx].split('_')[1]
+    if (state[finishy][finishx].blank? || state[finishy][finishx].split('_')[1] != state[starty][startx].split('_')[1]) && state[starty][startx] != ''
       state[finishy][finishx] = state[starty][startx]
       state[starty][startx] = ''
       moves << [startx, starty, finishx, finishy]

@@ -8,5 +8,5 @@
   <%= form.select :mode, Game.modes.keys.map { |mode| [mode.humanize, mode] } %>
   <%= form.select :time, Game.times.keys.map { |time| [time.humanize, time] } %>
 
-  <%= form.submit "Start New Game" %>
+  <%= form.submit "Start New Game", class: "button1" %>
 <% end %>

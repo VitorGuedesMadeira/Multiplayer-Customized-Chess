@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :games, except: %i[destroy] do
-    patch "", to: 'games#move_piece'
+    patch :move_piece, on: :member
   end
   root "home#index"
 end

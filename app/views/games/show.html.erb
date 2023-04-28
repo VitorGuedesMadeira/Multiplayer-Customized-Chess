@@ -14,7 +14,7 @@
       <% @game.state.each_with_index do |row, row_index| %>
         <div class='row'>
           <% row.each_with_index do |cell, cell_index| %>
-          <div class="cell" id="<%= "piece-#{cell_index}-#{row_index}"%>" draggable="true" data-action="dragstart->drag#dragStart dragover->drag#dragOver dragenter->drag#dragEnter drop->drag#dragDrop dragend->drag#dragEnd dragleave->drag#dragLeave">
+          <div class="cell" id="<%= "piece-#{@game.id}-#{cell_index}-#{row_index}"%>" draggable="true" data-action="dragstart->drag#dragStart dragover->drag#dragOver dragenter->drag#dragEnter drop->drag#dragDrop dragend->drag#dragEnd dragleave->drag#dragLeave">
             <%= cell %>
           </div>
           <% end %>
@@ -45,8 +45,8 @@
       <p>Moves:</p>
       <div id="moves">
       <% if @game.moves %>
-        <% @game.moves.each do |move| %>
-          <p><%= move %></p>
+        <% @game.moves.each_with_index do |move, index| %>
+          <p><%= index + 1 %>. "<%= move %>"</p>
         <% end %>
       <% end %>
       </div>

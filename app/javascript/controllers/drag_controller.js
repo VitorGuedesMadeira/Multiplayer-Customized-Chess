@@ -35,21 +35,22 @@ export default class extends Controller {
     const targetSquare = event.target;
 
     // Move the chess piece to the target square
-    if (targetSquare !== currentSquare) {
+    if (targetSquare !== currentSquare && targetSquare.innerText.split('_')[1] !== currentSquare.innerText.split('_')[1] ) {
       targetSquare.innerText = currentSquare.innerText;
       currentSquare.innerText = '';
     }
 
-    const currentx = currentSquare.id.split('-')[1];
-    const currenty = currentSquare.id.split('-')[2];
-    const targetx = targetSquare.id.split('-')[1];
-    const targety = targetSquare.id.split('-')[2];
+    const currentx = currentSquare.id.split('-')[2];
+    const currenty = currentSquare.id.split('-')[3];
+    const targetx = targetSquare.id.split('-')[2];
+    const targety = targetSquare.id.split('-')[3];
+    const gameID = targetSquare.id.split('-')[1];
 
     const csrfToken = document
       .querySelector("meta[name='csrf-token']")
       .getAttribute('content');
     // Make an HTTP request to call the move method in the Rails controller
-    fetch(`/games/17`, {
+    fetch(`/games/${gameID}/move_piece`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
