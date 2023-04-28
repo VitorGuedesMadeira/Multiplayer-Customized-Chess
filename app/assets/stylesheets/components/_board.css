@@ -16,7 +16,7 @@
   justify-content: center;
   align-items: center;
   background-color: whitesmoke;
-  cursor: grab;
+  color: transparent;
 }
 
 .row:nth-child(2n) .cell:nth-child(2n) {
@@ -29,4 +29,53 @@
 
 .over {
   background-color: #354426 !important;
+}
+
+.pawn_1 {
+  background-image: url('pawn_1.png') !important;
+  background-size: cover;
+}
+.rock_1 {
+  background-image: url('rock_1.png') !important;
+  background-size: cover;
+}
+.knight_1 {
+  background-image: url('knight_1.png') !important;
+  background-size: cover;
+}
+.bishop_1 {
+  background-image: url('bishop_1.png') !important;
+  background-size: cover;
+}
+.queen_1 {
+  background-image: url('queen_1.png') !important;
+  background-size: cover;
+}
+.king_1 {
+  background-image: url('king_1.png') !important;
+  background-size: cover;
+}
+.pawn_2 {
+  background-image: url('pawn_2.png') !important;
+  background-size: cover;
+}
+.rock_2 {
+  background-image: url('rock_2.png') !important;
+  background-size: cover;
+}
+.knight_2 {
+  background-image: url('knight_2.png') !important;
+  background-size: cover;
+}
+.bishop_2 {
+  background-image: url('bishop_2.png') !important;
+  background-size: cover;
+}
+.queen_2 {
+  background-image: url('queen_2.png') !important;
+  background-size: cover;
+}
+.king_2 {
+  background-image: url('king_2.png') !important;
+  background-size: cover;
 }

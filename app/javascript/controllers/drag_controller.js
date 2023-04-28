@@ -35,7 +35,13 @@ export default class extends Controller {
     const targetSquare = event.target;
 
     // Move the chess piece to the target square
-    if (targetSquare !== currentSquare && targetSquare.innerText.split('_')[1] !== currentSquare.innerText.split('_')[1] ) {
+    if (
+      targetSquare !== currentSquare &&
+      targetSquare.innerText.split('_')[1] !==
+        currentSquare.innerText.split('_')[1]
+    ) {
+      currentSquare.classList = 'cell';
+      targetSquare.classList = `cell ${currentSquare.innerText}`;
       targetSquare.innerText = currentSquare.innerText;
       currentSquare.innerText = '';
     }
