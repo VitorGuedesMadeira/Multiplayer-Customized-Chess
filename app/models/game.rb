@@ -62,12 +62,55 @@ class Game < ApplicationRecord
                    ] end
   end
 
-  def move(startx, starty, finishx, finishy)
+  def move(piece, startx, starty, finishx, finishy)
+    type = piece.split('_')[0]
+    color = piece.split('_')[1]
+    # Checks if it is empty or if it is same team piece
     if (state[finishy][finishx].blank? || state[finishy][finishx].split('_')[1] != state[starty][startx].split('_')[1]) && state[starty][startx] != ''
-      state[finishy][finishx] = state[starty][startx]
-      state[starty][startx] = ''
-      moves << [startx, starty, finishx, finishy]
+      case piece
+      when 'pawn_1'
+        if starty - finishy == 1 && startx == finishx && state[finishy][finishx] == ''
+          state[finishy][finishx] = state[starty][startx]
+          state[starty][startx] = ''
+          # Adds move to moves
+          moves << [startx, starty, finishx, finishy]
+        elsif starty - finishy == 1 && state[finishy][finishx].split('_')[1] != state[starty][startx].split('_')[1] && (startx - finishx).abs == 1 && state[finishy][finishx] != ''
+          state[finishy][finishx] = state[starty][startx]
+          state[starty][startx] = ''
+          # Adds move to moves
+          moves << [startx, starty, finishx, finishy]
+        elsif starty - finishy == 2 && startx == finishx && starty == 6
+          state[finishy][finishx] = state[starty][startx]
+          state[starty][startx] = ''
+          # Adds move to moves
+          moves << [startx, starty, finishx, finishy]
+        end
+      when 'pawn_2'
+        if finishy - starty == 1 && startx == finishx && state[finishy][finishx] == ''
+          state[finishy][finishx] = state[starty][startx]
+          state[starty][startx] = ''
+          # Adds move to moves
+          moves << [startx, starty, finishx, finishy]
+        elsif finishy - starty == 1 && state[finishy][finishx].split('_')[1] != state[starty][startx].split('_')[1] && (startx - finishx).abs == 1 && state[finishy][finishx] != ''
+          state[finishy][finishx] = state[starty][startx]
+          state[starty][startx] = ''
+          # Adds move to moves
+          moves << [startx, starty, finishx, finishy]
+        elsif finishy - starty == 2 && startx == finishx && starty == 1
+          state[finishy][finishx] = state[starty][startx]
+          state[starty][startx] = ''
+          # Adds move to moves
+          moves << [startx, starty, finishx, finishy]
+        end
+      end
     end
+
+    # if finishy - starty == 1
+    #   state[finishy][finishx] = state[starty][startx]
+    #   state[starty][startx] = ''
+    # end
+    # p "##################"
+    # p piece
     save
   end
 end

@@ -4,7 +4,7 @@ import { Controller } from '@hotwired/stimulus';
 export default class extends Controller {
   dragStart(event) {
     const targetToBeMoved = event.target;
-    if(targetToBeMoved.innerText != '' || targetToBeMoved != 'x') {
+    if (targetToBeMoved.innerText != '') {
       event.dataTransfer.setData('text/plain', event.target.id);
     }
   }
@@ -37,6 +37,10 @@ export default class extends Controller {
     const currentSquare = document.getElementById(pieceId);
     const targetSquare = event.target;
 
+    const currentID = currentSquare.id;
+    const targetID = targetSquare.id;
+    const gameID = targetID.split('-')[1];
+
     // Move the chess piece to the target square
     if (
       targetSquare !== currentSquare &&
@@ -46,14 +50,20 @@ export default class extends Controller {
       currentSquare.classList = 'cell';
       targetSquare.classList = `cell ${currentSquare.innerText}`;
       targetSquare.innerText = currentSquare.innerText;
+      currentSquare.id = `-${currentID.split('-')[1]}-${
+        currentID.split('-')[2]
+      }-${currentID.split('-')[3]}`;
+      targetSquare.id = `${currentSquare.innerText}-${targetID.split('-')[1]}-${
+        targetID.split('-')[2]
+      }-${targetID.split('-')[3]}`;
       currentSquare.innerText = '';
     }
 
-    const currentx = currentSquare.id.split('-')[2];
-    const currenty = currentSquare.id.split('-')[3];
-    const targetx = targetSquare.id.split('-')[2];
-    const targety = targetSquare.id.split('-')[3];
-    const gameID = targetSquare.id.split('-')[1];
+    const piece = currentID.split('-')[0];
+    const currentx = currentID.split('-')[2];
+    const currenty = currentID.split('-')[3];
+    const targetx = targetID.split('-')[2];
+    const targety = targetID.split('-')[3];
 
     const csrfToken = document
       .querySelector("meta[name='csrf-token']")
@@ -66,6 +76,7 @@ export default class extends Controller {
         'X-CSRF-Token': csrfToken,
       },
       body: JSON.stringify({
+        piece,
         currentx,
         currenty,
         targetx,

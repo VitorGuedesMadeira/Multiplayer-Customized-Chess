@@ -31,7 +31,8 @@ class GamesController < ApplicationController
   def update; end
 
   def move_piece
-    @game.move(params[:currentx].to_i, params[:currenty].to_i, params[:targetx].to_i, params[:targety].to_i)
+    @game.move(params[:piece], params[:currentx].to_i, params[:currenty].to_i, params[:targetx].to_i, params[:targety].to_i)
+    redirect_to game_path(@game)
   end
 
   private
