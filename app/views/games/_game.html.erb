@@ -3,8 +3,8 @@
     <% game.state.each do |row| %>
     <div class='mini-row'>
       <% row.each do |cell| %>
-        <div class="mini-cell">
-          <%= cell[0] %>
+        <div class="mini-cell <%= cell %>">
+          <%= cell %>
         </div>
       <% end %>
     </div>

@@ -44,8 +44,8 @@
     <div>
       <p>Moves:</p>
       <div id="moves">
-      <% if @game.moves %>
-        <% @game.moves.each_with_index do |move, index| %>
+      <% if @moves %>
+        <% @moves.each_with_index do |move, index| %>
           <p><%= index + 1 %>. "<%= move %>"</p>
         <% end %>
       <% end %>

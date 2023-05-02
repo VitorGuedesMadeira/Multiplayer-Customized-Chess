@@ -5,7 +5,13 @@ class GamesController < ApplicationController
     @games = Game.all.order(id: :asc)
   end
 
-  def show; end
+  def show
+    @moves = @game.moves.map do |subarray|
+      letters = ('a'..'h').to_a
+      numbers = (1..8).to_a.reverse
+      [letters[subarray[0]], numbers[subarray[1]], letters[subarray[2]], numbers[subarray[3]]].join
+    end
+  end
 
   def new
     @game = Game.new

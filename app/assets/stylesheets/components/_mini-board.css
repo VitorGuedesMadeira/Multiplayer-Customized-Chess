@@ -17,6 +17,7 @@
   align-items: center;
   background-color: whitesmoke;
   font-size: 0.75rem;
+  color: transparent;
 }
 
 .mini-row:nth-child(2n) .mini-cell:nth-child(2n) {
@@ -25,4 +26,16 @@
 
 .mini-row:nth-child(2n-1) .mini-cell:nth-child(2n-1) {
   background-color: #769656;
+}
+
+.mini-cell.x {
+  background-color: #272522;
+}
+
+.mini-row:nth-child(2n) .mini-cell.x:nth-child(2n) {
+  background-color: #272522;
+}
+
+.mini-row:nth-child(2n-1) .mini-cell.x:nth-child(2n-1) {
+  background-color: #272522;
 }

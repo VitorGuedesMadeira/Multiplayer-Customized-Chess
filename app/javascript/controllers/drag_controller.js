@@ -3,7 +3,10 @@ import { Controller } from '@hotwired/stimulus';
 // Connects to data-controller="drag"
 export default class extends Controller {
   dragStart(event) {
-    event.dataTransfer.setData('text/plain', event.target.id);
+    const targetToBeMoved = event.target;
+    if(targetToBeMoved.innerText != '' || targetToBeMoved != 'x') {
+      event.dataTransfer.setData('text/plain', event.target.id);
+    }
   }
 
   dragOver(event) {
