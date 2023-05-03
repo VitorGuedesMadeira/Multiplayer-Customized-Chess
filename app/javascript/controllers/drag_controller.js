@@ -42,22 +42,22 @@ export default class extends Controller {
     const gameID = targetID.split('-')[1];
 
     // Move the chess piece to the target square
-    if (
-      targetSquare !== currentSquare &&
-      targetSquare.innerText.split('_')[1] !==
-        currentSquare.innerText.split('_')[1]
-    ) {
-      currentSquare.classList = 'cell';
-      targetSquare.classList = `cell ${currentSquare.innerText}`;
-      targetSquare.innerText = currentSquare.innerText;
-      currentSquare.id = `-${currentID.split('-')[1]}-${
-        currentID.split('-')[2]
-      }-${currentID.split('-')[3]}`;
-      targetSquare.id = `${currentSquare.innerText}-${targetID.split('-')[1]}-${
-        targetID.split('-')[2]
-      }-${targetID.split('-')[3]}`;
-      currentSquare.innerText = '';
-    }
+    // if (
+    //   targetSquare !== currentSquare &&
+    //   targetSquare.innerText.split('_')[1] !==
+    //     currentSquare.innerText.split('_')[1]
+    // ) {
+    //   currentSquare.classList = 'cell';
+    //   targetSquare.classList = `cell ${currentSquare.innerText}`;
+    //   targetSquare.innerText = currentSquare.innerText;
+    //   currentSquare.id = `-${currentID.split('-')[1]}-${
+    //     currentID.split('-')[2]
+    //   }-${currentID.split('-')[3]}`;
+    //   targetSquare.id = `${currentSquare.innerText}-${targetID.split('-')[1]}-${
+    //     targetID.split('-')[2]
+    //   }-${targetID.split('-')[3]}`;
+    //   currentSquare.innerText = '';
+    // }
 
     const piece = currentID.split('-')[0];
     const currentx = currentID.split('-')[2];

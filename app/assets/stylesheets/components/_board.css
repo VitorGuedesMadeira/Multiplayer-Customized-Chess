@@ -155,13 +155,13 @@
 }
 
 .x {
-  background-color: #312E2B;
+  background-color: #312e2b;
 }
 
 .row:nth-child(2n) .cell.x:nth-child(2n) {
-  background-color: #312E2B;
+  background-color: #312e2b;
 }
 
 .row:nth-child(2n-1) .cell.x:nth-child(2n-1) {
-  background-color: #312E2B;
+  background-color: #312e2b;
 }

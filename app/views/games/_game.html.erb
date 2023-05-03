@@ -1,11 +1,65 @@
-    <div class="board" data-controller="drag" id="<%= dom_id(@game) %>">
-      <% @game.state.each_with_index do |row, row_index| %>
+<div id="<%= dom_id(game) %>" style="display: flex">
+
+  <div class="game">
+    <div class="player-info">
+      <div class="player">
+        <div class="player-image">Image</div>
+        <p>Player</p>
+      </div>
+      <div class="timer">
+        Timer
+      </div>
+    </div>
+
+    <div class="board" data-controller="drag">
+      <% game.state.each_with_index do |row, row_index| %>
         <div class='row'>
           <% row.each_with_index do |cell, cell_index| %>
-          <div class="cell <%= cell %>" id="<%= "#{cell}-#{@game.id}-#{cell_index}-#{row_index}"%>" draggable="true" data-action="dragstart->drag#dragStart dragover->drag#dragOver dragenter->drag#dragEnter drop->drag#dragDrop dragend->drag#dragEnd dragleave->drag#dragLeave">
+          <div class="cell <%= cell %>" id="<%= "#{cell}-#{game.id}-#{cell_index}-#{row_index}"%>" draggable="true" data-action="dragstart->drag#dragStart dragover->drag#dragOver dragenter->drag#dragEnter drop->drag#dragDrop dragend->drag#dragEnd dragleave->drag#dragLeave">
             <%= cell %>
           </div>
           <% end %>
         </div>
       <% end %>
     </div>
+
+    <div class="player-info">
+      <div class="player">
+        <div class="player-image">Image</div>
+        <p>Player</p>
+      </div>
+      <div class="timer">
+        Timer
+      </div>
+    </div>
+  </div>
+
+  <div class="information">
+    <div>
+      <h1>Game: <%= game.id %></h1>
+      <p>Players: <%= game.players %></p>
+      <p>Turn: <%= game.turn === 0 ? "White" : "Black" %></p>
+      <p>Time: <%= game.time %></p>
+    </div>
+
+    <% moves = get_moves(game) %>
+
+    <div>
+      <p>Moves:</p>
+      <div id="moves">
+      <% if moves %>
+        <% moves.each_with_index do |move, index| %>
+          <p><%= index + 1 %>. "<%= move %>"</p>
+        <% end %>
+      <% end %>
+      </div>
+    </div>
+
+    <div>
+      <p>Theme: <%= game.theme %></p>
+      <p>Mode: <%= game.mode %></p>
+      <p>Status: <%= game.status %></p>
+      <%= link_to "Surrender", games_path, class: "button2" %>
+    </div>
+  </div>
+</div>
