@@ -11,17 +11,7 @@
       </div>
     </div>
 
-    <div class="board" data-controller="drag" id="<%= dom_id(@game) %>">
-      <% @game.state.each_with_index do |row, row_index| %>
-        <div class='row'>
-          <% row.each_with_index do |cell, cell_index| %>
-          <div class="cell <%= cell %>" id="<%= "#{cell}-#{@game.id}-#{cell_index}-#{row_index}"%>" draggable="true" data-action="dragstart->drag#dragStart dragover->drag#dragOver dragenter->drag#dragEnter drop->drag#dragDrop dragend->drag#dragEnd dragleave->drag#dragLeave">
-            <%= cell %>
-          </div>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
+    <%= render @game %>
 
     <div class="player-info">
       <div class="player">
