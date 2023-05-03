@@ -1,3 +1,4 @@
+<%= turbo_stream_from @game %>
 <div class="game-container">
   <div class="game">
     <div class="player-info">
@@ -10,7 +11,7 @@
       </div>
     </div>
 
-    <div class="board" data-controller="drag">
+    <div class="board" data-controller="drag" id="<%= dom_id(@game) %>">
       <% @game.state.each_with_index do |row, row_index| %>
         <div class='row'>
           <% row.each_with_index do |cell, cell_index| %>

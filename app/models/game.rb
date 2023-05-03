@@ -16,6 +16,8 @@ class Game < ApplicationRecord
 
   before_create :set_board
 
+  after_update_commit { broadcast_update }
+
   def set_board
     self.state = case mode
                  when 'one_vs_one'

@@ -2,7 +2,7 @@ class GamesController < ApplicationController
   before_action :set_game, only: %i[show edit update move_piece]
 
   def index
-    @games = Game.all.order(id: :asc)
+    @mini_games = Game.all.order(id: :asc)
   end
 
   def show
