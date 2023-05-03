@@ -1,0 +1,27 @@
+nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+}
+
+nav ul {
+  list-style-type: none;
+}
+
+nav ul li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+nav ul a {
+  color: white;
+  text-decoration: none;
+  width: 100%;
+  padding: 0.75rem;
+}
+
+nav ul a:hover {
+  background-color: rgb(18, 18, 18);
+}

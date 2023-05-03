@@ -1,0 +1,7 @@
+.mini-game {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: #272522;
+  border-radius: 0.25rem;
+}

@@ -1,0 +1,31 @@
+.player-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.player {
+  display: flex;
+  gap: 1rem;
+}
+
+.player-image  {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  background-color: #272522;
+  color: white;
+  border-radius: 0.25rem;
+}
+
+.timer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 9rem;
+  height: 3rem;
+  background-color: #272522;
+  color: white;
+  border-radius: 0.25rem;
+}

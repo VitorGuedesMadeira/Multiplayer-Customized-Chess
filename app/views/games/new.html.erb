@@ -1,0 +1,12 @@
+<h1>New Game</h1>
+<%= form_with model: @game do |form| %>
+  <%#= form.select :time %>
+  <%#= form.select :theme %>
+  <%#= form.select :mode %>
+
+  <%= form.select :theme, Game.themes.keys.map { |theme| [theme.humanize, theme] } %>
+  <%= form.select :mode, Game.modes.keys.map { |mode| [mode.humanize, mode] } %>
+  <%= form.select :time, Game.times.keys.map { |time| [time.humanize, time] } %>
+
+  <%= form.submit "Start New Game", class: "button1" %>
+<% end %>
