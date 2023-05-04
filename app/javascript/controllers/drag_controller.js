@@ -30,35 +30,11 @@ export default class extends Controller {
 
   dragDrop(event) {
     event.target.classList.remove('over');
-    // Get the ID of the chess piece being dragged
-    const pieceId = event.dataTransfer.getData('text/plain');
+    // Get the ID of the drag and drop positions (start and finish)
+    const currentID = event.dataTransfer.getData('text/plain');
+    const targetID = event.target.id;
 
-    // Get the current and target squares for the chess piece
-    const currentSquare = document.getElementById(pieceId);
-    const targetSquare = event.target;
-
-    const currentID = currentSquare.id;
-    const targetID = targetSquare.id;
-    const gameID = targetID.split('-')[1];
-
-    // Move the chess piece to the target square
-    // if (
-    //   targetSquare !== currentSquare &&
-    //   targetSquare.innerText.split('_')[1] !==
-    //     currentSquare.innerText.split('_')[1]
-    // ) {
-    //   currentSquare.classList = 'cell';
-    //   targetSquare.classList = `cell ${currentSquare.innerText}`;
-    //   targetSquare.innerText = currentSquare.innerText;
-    //   currentSquare.id = `-${currentID.split('-')[1]}-${
-    //     currentID.split('-')[2]
-    //   }-${currentID.split('-')[3]}`;
-    //   targetSquare.id = `${currentSquare.innerText}-${targetID.split('-')[1]}-${
-    //     targetID.split('-')[2]
-    //   }-${targetID.split('-')[3]}`;
-    //   currentSquare.innerText = '';
-    // }
-
+    const gameID = currentID.split('-')[1];
     const piece = currentID.split('-')[0];
     const currentx = currentID.split('-')[2];
     const currenty = currentID.split('-')[3];

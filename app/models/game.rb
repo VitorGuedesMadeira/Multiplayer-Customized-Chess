@@ -64,9 +64,13 @@ class Game < ApplicationRecord
                    ] end
   end
 
+  def update_king_one_position
+    
+  end
+  
   def valid_target?(startx, starty, finishx, finishy)
     # Checks if it is empty or if it is same team piece
-    (state[finishy][finishx].blank? || state[finishy][finishx].split('_')[1] != state[starty][startx].split('_')[1]) && state[starty][startx] != ''
+    (state[finishy][finishx].blank? || state[finishy][finishx].split('_')[1] != state[starty][startx].split('_')[1]) && state[starty][startx] != '' && state[finishx][finishy] != 'x'
   end
 
   def move(piece, startx, starty, finishx, finishy)
@@ -74,63 +78,18 @@ class Game < ApplicationRecord
     if valid_target?(startx, starty, finishx, finishy)
       case piece
       when 'pawn_1'
-        if starty - finishy == 1 && startx == finishx && state[finishy][finishx] == ''
-          move_piece(startx, starty, finishx, finishy)
-        elsif starty - finishy == 1 && state[finishy][finishx].split('_')[1] != state[starty][startx].split('_')[1] && (startx - finishx).abs == 1 && state[finishy][finishx] != ''
-          move_piece(startx, starty, finishx, finishy)
-        elsif starty - finishy == 2 && startx == finishx && starty == 6
-          move_piece(startx, starty, finishx, finishy)
-        end
-
+        pawn_one(startx, starty, finishx, finishy)
       when 'pawn_2'
-        if finishy - starty == 1 && startx == finishx && state[finishy][finishx] == ''
-          move_piece(startx, starty, finishx, finishy)
-        elsif finishy - starty == 1 && state[finishy][finishx].split('_')[1] != state[starty][startx].split('_')[1] && (startx - finishx).abs == 1 && state[finishy][finishx] != ''
-          move_piece(startx, starty, finishx, finishy)
-        elsif finishy - starty == 2 && startx == finishx && starty == 1
-          move_piece(startx, starty, finishx, finishy)
-        end
-
-      when 'knight_1'
-        if (starty - finishy == 2 || finishy - starty == 2) && (startx == finishx + 1 || startx == finishx - 1)
-          move_piece(startx, starty, finishx, finishy)
-        elsif (startx - finishx == 2 || finishx - startx == 2) && (starty == finishy + 1 || starty == finishy - 1)
-          move_piece(startx, starty, finishx, finishy)
-        end
-
-      when 'knight_2'
-        if (starty - finishy == 2 || finishy - starty == 2) && (startx == finishx + 1 || startx == finishx - 1)
-          move_piece(startx, starty, finishx, finishy)
-        elsif (startx - finishx == 2 || finishx - startx == 2) && (starty == finishy + 1 || starty == finishy - 1)
-          move_piece(startx, starty, finishx, finishy)
-        end
-
-      when 'bishop_1'
+        pawn_two(startx, starty, finishx, finishy)
+      when 'knight_1', 'knight_2'
+        knight(startx, starty, finishx, finishy)
+      when 'bishop_1', 'bishop_2'
         move_piece(startx, starty, finishx, finishy) if valid_diagonal_move?(startx, starty, finishx, finishy) && !obstacles_on_path?(startx, starty, finishx, finishy)
-
-      when 'bishop_2'
-        move_piece(startx, starty, finishx, finishy) if valid_diagonal_move?(startx, starty, finishx, finishy) && !obstacles_on_path?(startx, starty, finishx, finishy)
-
-      when 'rock_1'
+      when 'rock_1', 'rock_2'
         move_piece(startx, starty, finishx, finishy) if valid_straight_move?(startx, starty, finishx, finishy) && !obstacles_on_path?(startx, starty, finishx, finishy)
-
-      when 'rock_2'
-        move_piece(startx, starty, finishx, finishy) if valid_straight_move?(startx, starty, finishx, finishy) && !obstacles_on_path?(startx, starty, finishx, finishy)
-
-      when 'queen_1'
-        if (valid_straight_move?(startx, starty, finishx, finishy) || valid_diagonal_move?(startx, starty, finishx, finishy)) && !obstacles_on_path?(startx, starty, finishx, finishy)
-          move_piece(startx, starty, finishx, finishy)
-        end
-
-      when 'queen_2'
-        if (valid_straight_move?(startx, starty, finishx, finishy) || valid_diagonal_move?(startx, starty, finishx, finishy)) && !obstacles_on_path?(startx, starty, finishx, finishy)
-          move_piece(startx, starty, finishx, finishy)
-        end
-
-      when 'king_1'
-        move_piece(startx, starty, finishx, finishy) if (starty - finishy).abs <= 1 && (startx - finishx).abs <= 1 && !obstacles_on_path?(startx, starty, finishx, finishy)
-
-      when 'king_2'
+      when 'queen_1', 'queen_2'
+        move_piece(startx, starty, finishx, finishy) if (valid_straight_move?(startx, starty, finishx, finishy) || valid_diagonal_move?(startx, starty, finishx, finishy)) && !obstacles_on_path?(startx, starty, finishx, finishy)
+      when 'king_1', 'king_2'
         move_piece(startx, starty, finishx, finishy) if (starty - finishy).abs <= 1 && (startx - finishx).abs <= 1 && !obstacles_on_path?(startx, starty, finishx, finishy)
       end
     end
@@ -156,30 +115,30 @@ class Game < ApplicationRecord
     row_diff.zero? || col_diff.zero?
   end
 
-  def obstacles_on_path?(start_x, start_y, end_x, end_y)
-    dx = (end_x - start_x).abs
-    dy = (end_y - start_y).abs
+  def obstacles_on_path?(startx, starty, finishx, finishy)
+    row_diff = (finishx - startx).abs
+    col_diff = (finishy - starty).abs
 
-    if dx.zero? && dy.zero?
+    if row_diff.zero? && col_diff.zero?
       return false # starting and ending positions are the same
     end
 
     # determine the direction of movement
-    x_inc = start_x < end_x ? 1 : -1
-    y_inc = start_y < end_y ? 1 : -1
+    x_increment = startx < finishx ? 1 : -1 # positive = right / negative = left
+    y_increment = starty < finishy ? 1 : -1 # positive = down  / negative = top
 
     # check for obstacles along the path
-    if dx.zero? # vertical movement
-      (start_y + y_inc).step(end_y - y_inc, y_inc).each do |y|
-        return true if state[y][start_x].present?
+    if row_diff.zero? # vertical movement
+      (starty + y_increment).step(finishy - y_increment, y_increment).each do |y|
+        return true if state[y][startx].present?
       end
-    elsif dy.zero? # horizontal movement
-      (start_x + x_inc).step(end_x - x_inc, x_inc).each do |x|
-        return true if state[start_y][x].present?
+    elsif col_diff.zero? # horizontal movement
+      (startx + x_increment).step(finishx - x_increment, x_increment).each do |x|
+        return true if state[starty][x].present?
       end
-    elsif dx == dy # diagonal movement
-      (start_x + x_inc).step(end_x - x_inc, x_inc).each_with_index do |x, i|
-        y = start_y + (y_inc * (i + 1))
+    elsif row_diff == col_diff # diagonal movement
+      (startx + x_increment).step(finishx - x_increment, x_increment).each_with_index do |x, i|
+        y = starty + (y_increment * (i + 1))
         return true if state[y][x].present?
       end
     else
@@ -187,5 +146,32 @@ class Game < ApplicationRecord
     end
 
     false # no obstacles on the path
+  end
+
+  def pawn_one(startx, starty, finishx, finishy)
+    if starty - finishy == 1 && startx == finishx && state[finishy][finishx] == ''
+      move_piece(startx, starty, finishx, finishy)
+    elsif starty - finishy == 1 && state[finishy][finishx].split('_')[1] != state[starty][startx].split('_')[1] && (startx - finishx).abs == 1 && state[finishy][finishx] != ''
+      move_piece(startx, starty, finishx, finishy)
+    elsif starty - finishy == 2 && startx == finishx && starty == 6
+      move_piece(startx, starty, finishx, finishy)
+    end
+  end
+
+  def pawn_two(startx, starty, finishx, finishy)
+    if finishy - starty == 1 && startx == finishx && state[finishy][finishx] == ''
+      move_piece(startx, starty, finishx, finishy)
+    elsif finishy - starty == 1 && state[finishy][finishx].split('_')[1] != state[starty][startx].split('_')[1] && (startx - finishx).abs == 1 && state[finishy][finishx] != ''
+      move_piece(startx, starty, finishx, finishy)
+    elsif finishy - starty == 2 && startx == finishx && starty == 1
+      move_piece(startx, starty, finishx, finishy)
+    end
+  end
+
+  def knight(startx, starty, finishx, finishy)
+    if ((starty - finishy).abs == 2 && (startx - finishx).abs == 1) ||
+       ((starty - finishy).abs == 1 && (startx - finishx).abs == 2)
+      move_piece(startx, starty, finishx, finishy)
+    end
   end
 end
