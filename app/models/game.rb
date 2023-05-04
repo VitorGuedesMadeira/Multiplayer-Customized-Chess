@@ -64,27 +64,35 @@ class Game < ApplicationRecord
                    ] end
   end
 
-  def check_available_positions(piece, currentx, currenty)
+  def check_available_positions(piece, startx, starty)
     valid_positions = []
-    case piece
-    when "knight_1", "knight_2"
-      valid_positions << [currentx + 2, currenty + 1]
-      valid_positions << [currentx + 1, currenty + 2]
-      valid_positions << [currentx - 1, currenty + 2]
-      valid_positions << [currentx - 1, currenty - 2]
-      valid_positions << [currentx + 2, currenty - 1]
-      valid_positions << [currentx + 1, currenty - 2]
-      valid_positions << [currentx - 2, currenty - 1]
-      valid_positions << [currentx - 2, currenty + 1]
-      
+    state.each_with_index do |row, row_index|
+      row.each_with_index do |_col, col_index|
+        next unless valid_target?(startx, starty, row_index, col_index)
+
+        case piece
+        when 'pawn_1'
+          valid_positions << [row_index, col_index] if pawn_one(startx, starty, row_index, col_index)
+        when 'pawn_2'
+          valid_positions << [row_index, col_index] if pawn_two(startx, starty, row_index, col_index)
+        when 'knight_1', 'knight_2'
+          valid_positions << [row_index, col_index] if knight(startx, starty, row_index, col_index)
+        when 'bishop_1', 'bishop_2'
+          valid_positions << [row_index, col_index] if valid_diagonal_move?(startx, starty, row_index, col_index) && !obstacles_on_path?(startx, starty, row_index, col_index)
+        when 'rock_1', 'rock_2'
+          valid_positions << [row_index, col_index] if valid_straight_move?(startx, starty, row_index, col_index) && !obstacles_on_path?(startx, starty, row_index, col_index)
+        when 'queen_1', 'queen_2'
+          valid_positions << [row_index, col_index] if (valid_straight_move?(startx, starty, row_index,
+                                                                             col_index) || valid_diagonal_move?(startx, starty, row_index,
+                                                                                                                col_index)) && !obstacles_on_path?(startx, starty, row_index, col_index)
+        when 'king_1', 'king_2'
+          valid_positions << [row_index, col_index] if (starty - col_index).abs <= 1 && (startx - row_index).abs <= 1 && !obstacles_on_path?(startx, starty, row_index, col_index)
+        end
+      end
     end
     valid_positions
   end
 
-  def update_king_one_position
-    
-  end
-  
   def valid_target?(startx, starty, finishx, finishy)
     # Checks if it is empty or if it is same team piece
     (state[finishy][finishx].blank? || state[finishy][finishx].split('_')[1] != state[starty][startx].split('_')[1]) && state[starty][startx] != '' && state[finishx][finishy] != 'x'
@@ -95,17 +103,19 @@ class Game < ApplicationRecord
     if valid_target?(startx, starty, finishx, finishy)
       case piece
       when 'pawn_1'
-        pawn_one(startx, starty, finishx, finishy)
+        move_piece(startx, starty, finishx, finishy) if pawn_one(startx, starty, finishx, finishy)
       when 'pawn_2'
-        pawn_two(startx, starty, finishx, finishy)
+        move_piece(startx, starty, finishx, finishy) if pawn_two(startx, starty, finishx, finishy)
       when 'knight_1', 'knight_2'
-        knight(startx, starty, finishx, finishy)
+        move_piece(startx, starty, finishx, finishy) if knight(startx, starty, finishx, finishy)
       when 'bishop_1', 'bishop_2'
         move_piece(startx, starty, finishx, finishy) if valid_diagonal_move?(startx, starty, finishx, finishy) && !obstacles_on_path?(startx, starty, finishx, finishy)
       when 'rock_1', 'rock_2'
         move_piece(startx, starty, finishx, finishy) if valid_straight_move?(startx, starty, finishx, finishy) && !obstacles_on_path?(startx, starty, finishx, finishy)
       when 'queen_1', 'queen_2'
-        move_piece(startx, starty, finishx, finishy) if (valid_straight_move?(startx, starty, finishx, finishy) || valid_diagonal_move?(startx, starty, finishx, finishy)) && !obstacles_on_path?(startx, starty, finishx, finishy)
+        move_piece(startx, starty, finishx, finishy) if (valid_straight_move?(startx, starty, finishx,
+                                                                              finishy) || valid_diagonal_move?(startx, starty, finishx,
+                                                                                                               finishy)) && !obstacles_on_path?(startx, starty, finishx, finishy)
       when 'king_1', 'king_2'
         move_piece(startx, starty, finishx, finishy) if (starty - finishy).abs <= 1 && (startx - finishx).abs <= 1 && !obstacles_on_path?(startx, starty, finishx, finishy)
       end
@@ -166,29 +176,19 @@ class Game < ApplicationRecord
   end
 
   def pawn_one(startx, starty, finishx, finishy)
-    if starty - finishy == 1 && startx == finishx && state[finishy][finishx] == ''
-      move_piece(startx, starty, finishx, finishy)
-    elsif starty - finishy == 1 && state[finishy][finishx].split('_')[1] != state[starty][startx].split('_')[1] && (startx - finishx).abs == 1 && state[finishy][finishx] != ''
-      move_piece(startx, starty, finishx, finishy)
-    elsif starty - finishy == 2 && startx == finishx && starty == 6
-      move_piece(startx, starty, finishx, finishy)
-    end
+    (starty - finishy == 1 && startx == finishx && state[finishy][finishx] == '') ||
+      (starty - finishy == 1 && state[finishy][finishx].split('_')[1] != state[starty][startx].split('_')[1] && (startx - finishx).abs == 1 && state[finishy][finishx] != '') ||
+      (starty - finishy == 2 && startx == finishx && starty == 6)
   end
 
   def pawn_two(startx, starty, finishx, finishy)
-    if finishy - starty == 1 && startx == finishx && state[finishy][finishx] == ''
-      move_piece(startx, starty, finishx, finishy)
-    elsif finishy - starty == 1 && state[finishy][finishx].split('_')[1] != state[starty][startx].split('_')[1] && (startx - finishx).abs == 1 && state[finishy][finishx] != ''
-      move_piece(startx, starty, finishx, finishy)
-    elsif finishy - starty == 2 && startx == finishx && starty == 1
-      move_piece(startx, starty, finishx, finishy)
-    end
+    (finishy - starty == 1 && startx == finishx && state[finishy][finishx] == '') ||
+      (finishy - starty == 1 && state[finishy][finishx].split('_')[1] != state[starty][startx].split('_')[1] && (startx - finishx).abs == 1 && state[finishy][finishx] != '') ||
+      (finishy - starty == 2 && startx == finishx && starty == 1)
   end
 
   def knight(startx, starty, finishx, finishy)
-    if ((starty - finishy).abs == 2 && (startx - finishx).abs == 1) ||
-       ((starty - finishy).abs == 1 && (startx - finishx).abs == 2)
-      move_piece(startx, starty, finishx, finishy)
-    end
+    ((starty - finishy).abs == 2 && (startx - finishx).abs == 1) ||
+      ((starty - finishy).abs == 1 && (startx - finishx).abs == 2)
   end
 end

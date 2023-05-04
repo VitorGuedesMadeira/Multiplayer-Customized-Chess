@@ -16,7 +16,7 @@ export default class extends Controller {
         .querySelector("meta[name='csrf-token']")
         .getAttribute('content');
       // Make an HTTP request to call the move method in the Rails controller
-      fetch(`/games/${gameID}/get_positions`, {
+      fetch(`/games/${gameID}/check_positions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -30,14 +30,13 @@ export default class extends Controller {
       })
         .then((response) => response.json()) // Extract JSON data from response
         .then((data) => {
-          // [[1,2],[2,3]]
           for (let i = 0; i < data.length; i++) {
             let cell = document.querySelector(
               `.board .row:nth-child(${data[i][1] + 1}) .cell:nth-child(${
                 data[i][0] + 1
               })`
             );
-            cell.classList.add('over');
+            cell.classList.add('highlight');
           }
         });
     }
@@ -64,6 +63,7 @@ export default class extends Controller {
 
   dragDrop(event) {
     event.target.classList.remove('over');
+    event.target.classList.remove('highlight');
     // Get the ID of the drag and drop positions (start and finish)
     const currentID = event.dataTransfer.getData('text/plain');
     const targetID = event.target.id;

@@ -27,6 +27,20 @@
   background-color: #769656;
 }
 
+.highlight {
+  position: relative;
+}
+
+.highlight::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #19201328;
+  z-index: 1;
+}
+
 .over {
   background-color: #354426 !important;
 }
@@ -36,56 +50,67 @@
   background-size: cover;
   cursor: grab;
 }
+
 .rock_1 {
   background-image: url('rock_1.png') !important;
   background-size: cover;
   cursor: grab;
 }
+
 .knight_1 {
   background-image: url('knight_1.png') !important;
   background-size: cover;
   cursor: grab;
 }
+
 .bishop_1 {
   background-image: url('bishop_1.png') !important;
   background-size: cover;
   cursor: grab;
 }
+
 .queen_1 {
   background-image: url('queen_1.png') !important;
   background-size: cover;
   cursor: grab;
 }
+
 .king_1 {
   background-image: url('king_1.png') !important;
   background-size: cover;
   cursor: grab;
 }
+
 .pawn_2 {
   background-image: url('pawn_2.png') !important;
   background-size: cover;
   cursor: grab;
 }
+
 .rock_2 {
   background-image: url('rock_2.png') !important;
   background-size: cover;
   cursor: grab;
 }
+
 .knight_2 {
   background-image: url('knight_2.png') !important;
   background-size: cover;
   cursor: grab;
 }
+
 .bishop_2 {
   background-image: url('bishop_2.png') !important;
   background-size: cover;
   cursor: grab;
 }
+
 .queen_2 {
   background-image: url('queen_2.png') !important;
   background-size: cover;
   cursor: grab;
 }
+
 .king_2 {
   background-image: url('king_2.png') !important;
   background-size: cover;
@@ -97,26 +122,31 @@
   background-size: cover;
   cursor: grab;
 }
+
 .rock_3 {
   background-image: url('rock_1.png') !important;
   background-size: cover;
   cursor: grab;
 }
+
 .knight_3 {
   background-image: url('knight_1.png') !important;
   background-size: cover;
   cursor: grab;
 }
+
 .bishop_3 {
   background-image: url('bishop_1.png') !important;
   background-size: cover;
   cursor: grab;
 }
+
 .queen_3 {
   background-image: url('queen_1.png') !important;
   background-size: cover;
   cursor: grab;
 }
+
 .king_3 {
   background-image: url('king_1.png') !important;
   background-size: cover;
@@ -128,26 +158,31 @@
   background-size: cover;
   cursor: grab;
 }
+
 .rock_4 {
   background-image: url('rock_1.png') !important;
   background-size: cover;
   cursor: grab;
 }
+
 .knight_4 {
   background-image: url('knight_1.png') !important;
   background-size: cover;
   cursor: grab;
 }
+
 .bishop_4 {
   background-image: url('bishop_1.png') !important;
   background-size: cover;
   cursor: grab;
 }
+
 .queen_4 {
   background-image: url('queen_1.png') !important;
   background-size: cover;
   cursor: grab;
 }
+
 .king_4 {
   background-image: url('king_1.png') !important;
   background-blend-mode: color;
