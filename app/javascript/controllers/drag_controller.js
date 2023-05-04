@@ -6,6 +6,40 @@ export default class extends Controller {
     const targetToBeMoved = event.target;
     if (targetToBeMoved.innerText != '') {
       event.dataTransfer.setData('text/plain', event.target.id);
+
+      const gameID = event.target.id.split('-')[1];
+      const piece = event.target.id.split('-')[0];
+      const currentx = event.target.id.split('-')[2];
+      const currenty = event.target.id.split('-')[3];
+
+      const csrfToken = document
+        .querySelector("meta[name='csrf-token']")
+        .getAttribute('content');
+      // Make an HTTP request to call the move method in the Rails controller
+      fetch(`/games/${gameID}/get_positions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': csrfToken,
+        },
+        body: JSON.stringify({
+          piece,
+          currentx,
+          currenty,
+        }),
+      })
+        .then((response) => response.json()) // Extract JSON data from response
+        .then((data) => {
+          // [[1,2],[2,3]]
+          for (let i = 0; i < data.length; i++) {
+            let cell = document.querySelector(
+              `.board .row:nth-child(${data[i][1] + 1}) .cell:nth-child(${
+                data[i][0] + 1
+              })`
+            );
+            cell.classList.add('over');
+          }
+        });
     }
   }
 

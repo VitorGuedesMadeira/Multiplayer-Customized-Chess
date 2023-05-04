@@ -64,6 +64,23 @@ class Game < ApplicationRecord
                    ] end
   end
 
+  def check_available_positions(piece, currentx, currenty)
+    valid_positions = []
+    case piece
+    when "knight_1", "knight_2"
+      valid_positions << [currentx + 2, currenty + 1]
+      valid_positions << [currentx + 1, currenty + 2]
+      valid_positions << [currentx - 1, currenty + 2]
+      valid_positions << [currentx - 1, currenty - 2]
+      valid_positions << [currentx + 2, currenty - 1]
+      valid_positions << [currentx + 1, currenty - 2]
+      valid_positions << [currentx - 2, currenty - 1]
+      valid_positions << [currentx - 2, currenty + 1]
+      
+    end
+    valid_positions
+  end
+
   def update_king_one_position
     
   end
