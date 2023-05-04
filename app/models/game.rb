@@ -67,7 +67,7 @@ class Game < ApplicationRecord
   def check_available_positions(piece, startx, starty)
     valid_positions = []
     state.each_with_index do |row, row_index|
-      row.each_with_index do |_col, col_index|
+      row.each_with_index do |col, col_index|
         next unless valid_target?(startx, starty, row_index, col_index)
 
         case piece
@@ -86,11 +86,51 @@ class Game < ApplicationRecord
                                                                              col_index) || valid_diagonal_move?(startx, starty, row_index,
                                                                                                                 col_index)) && !obstacles_on_path?(startx, starty, row_index, col_index)
         when 'king_1', 'king_2'
+
           valid_positions << [row_index, col_index] if (starty - col_index).abs <= 1 && (startx - row_index).abs <= 1 && !obstacles_on_path?(startx, starty, row_index, col_index)
         end
       end
     end
     valid_positions
+  end
+
+  def check_check
+    # Check the enemies possible positions
+    # if state[row_index][col_index] == 'king_1'
+    #   white_king = [row_index, col_index]
+    # end
+    # if state[row_index][col_index] == 'king_2'
+    #   black_king = [row_index, col_index]
+    # end
+
+    valid_positions = []
+    state.each_with_index do |row, row_index|
+      row.each_with_index do |col, col_index|
+        next unless valid_target?(startx, starty, row_index, col_index)
+
+        case state[row_index][col_index]
+        when 'pawn_1'
+          valid_positions << [row_index, col_index] if pawn_one(startx, starty, row_index, col_index)
+        when 'pawn_2'
+          valid_positions << [row_index, col_index] if pawn_two(startx, starty, row_index, col_index)
+        when 'knight_1', 'knight_2'
+          valid_positions << [row_index, col_index] if knight(startx, starty, row_index, col_index)
+        when 'bishop_1', 'bishop_2'
+          valid_positions << [row_index, col_index] if valid_diagonal_move?(startx, starty, row_index, col_index) && !obstacles_on_path?(startx, starty, row_index, col_index)
+        when 'rock_1', 'rock_2'
+          valid_positions << [row_index, col_index] if valid_straight_move?(startx, starty, row_index, col_index) && !obstacles_on_path?(startx, starty, row_index, col_index)
+        when 'queen_1', 'queen_2'
+          valid_positions << [row_index, col_index] if (valid_straight_move?(startx, starty, row_index,
+                                                                             col_index) || valid_diagonal_move?(startx, starty, row_index,
+                                                                                                                col_index)) && !obstacles_on_path?(startx, starty, row_index, col_index)
+        when 'king_1', 'king_2'
+
+          valid_positions << [row_index, col_index] if (starty - col_index).abs <= 1 && (startx - row_index).abs <= 1 && !obstacles_on_path?(startx, starty, row_index, col_index)
+        end
+      end
+    end
+    valid_positions
+    # Check my king position
   end
 
   def valid_target?(startx, starty, finishx, finishy)
@@ -125,11 +165,9 @@ class Game < ApplicationRecord
   def move(piece, startx, starty, finishx, finishy)
     if turn.even?
       return if piece.split('_')[1] == '2'
-
     elsif piece.split('_')[1] == '1'
       return
     end
-
     case_move(piece, startx, starty, finishx, finishy)
     save
   end
