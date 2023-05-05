@@ -67,7 +67,7 @@ class Game < ApplicationRecord
   def check_available_positions(piece, startx, starty)
     valid_positions = []
     state.each_with_index do |row, row_index|
-      row.each_with_index do |_col, col_index|
+      row.each_with_index do |col, col_index|
         next unless valid_target?(startx, starty, row_index, col_index)
 
         case piece
@@ -94,7 +94,25 @@ class Game < ApplicationRecord
     valid_positions
   end
 
-  def check_check; end
+  def check_check
+    white_valid_positions = []
+    black_valid_positions = []
+    white_king = []
+    black_king = []
+    state.each_with_index do |row, row_index|
+      row.each_with_index do |col, col_index|
+        next if col.empty?
+        white_king = [col_index, row_index] if col == 'king_1'
+        black_king = [col_index, row_index] if col == 'king_2'
+        # p '################################'
+        # p white_king unless white_king.nil?
+        # p black_king unless black_king.nil?
+        white_valid_positions << check_available_positions(col, col_index, row_index) if col.split('_')[1].to_i == 1
+        black_valid_positions << check_available_positions(col, col_index, row_index) if col.split('_')[1].to_i == 2
+      end
+    end
+    [black_valid_positions.flatten(1).include?(white_king), white_valid_positions.flatten(1).include?(black_king)]
+  end
 
   def valid_target?(startx, starty, finishx, finishy)
     # Checks if it is empty or if it is same team piece
@@ -141,8 +159,6 @@ class Game < ApplicationRecord
     state[finishy][finishx] = state[starty][startx]
     state[starty][startx] = ''
     # Adds move to moves
-    puts '############################################'
-    puts moved_piece
     moves << [startx, starty, finishx, finishy, moved_piece]
   end
 
