@@ -33,8 +33,8 @@
 </div>
 
 <div class="information">
-  <div>
-    <h1>Game: <%= game.id %></h1>
+  <div class="information-div">
+    <h1>Game #<%= game.id %></h1>
     <p>Players: <%= game.players %></p>
     <p>Turn: <%= game.turn % 2 == 0 ? "White" : "Black" %></p>
     <p>Time: <%= game.time %></p>
@@ -42,18 +42,35 @@
 
   <% moves = get_moves(game) %>
 
-  <div>
+  <div class="information-div">
     <p>Moves:</p>
-    <div id="moves">
-    <% if moves %>
-      <% moves.each_with_index do |move, index| %>
-        <p><%= index + 1 %>. "<%= move %>"</p>
+      <div id="moves">
+      <% if moves %>
+          <table>
+            <thead>
+              <tr>
+                <th>Movement</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Piece</th>
+              </tr>
+            </thead>
+            <% moves.each_with_index do |move, index| %>
+            <tbody>
+              <tr>
+                <td><%= index + 1 %></td>
+                <td><%= move[0][0] + move[0][1] %></td>
+                <td><%= move[0][2] + move[0][3] %></td>
+                <td><%= move[1] %></td>
+              </tr>
+            </tbody>
+            <% end %>
+          </table>
       <% end %>
-    <% end %>
     </div>
   </div>
 
-  <div>
+  <div class="information-div"  >
     <p>Theme: <%= game.theme %></p>
     <p>Mode: <%= game.mode %></p>
     <p>Status: <%= game.status %></p>

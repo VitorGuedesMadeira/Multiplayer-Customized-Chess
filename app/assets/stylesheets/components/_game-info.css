@@ -7,7 +7,7 @@
   gap: 1px;
 }
 
-.information div {
+.information .information-div {
   border-radius: 0.25rem;
   background-color: #272522;
   padding: 1rem;

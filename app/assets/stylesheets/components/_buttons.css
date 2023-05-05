@@ -1,6 +1,6 @@
 .button1 {
   text-align: center;
-  background-color: #7FA650;
+  background-color: #8c939b;
   color: white;
   text-decoration: none;
   border-radius: 0.25rem;
@@ -16,7 +16,7 @@
 }
 
 .button1:hover {
-  background-color: #698b3f;
+  background-color: #5f6975;
 }
 
 .button2 {
