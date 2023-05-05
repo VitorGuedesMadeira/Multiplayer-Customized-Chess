@@ -50,18 +50,24 @@
             <thead>
               <tr>
                 <th>Movement</th>
+                <th>Piece</th>
                 <th>From</th>
                 <th>To</th>
-                <th>Piece</th>
+                <th>Target</th>
               </tr>
             </thead>
             <% moves.each_with_index do |move, index| %>
             <tbody>
               <tr>
                 <td><%= index + 1 %></td>
+                <td><%= image_tag(move[1] + ".png", class: "movement-image") %></td>
                 <td><%= move[0][0] + move[0][1] %></td>
                 <td><%= move[0][2] + move[0][3] %></td>
-                <td><%= move[1] %></td>
+                <% if !move[2].empty? %>
+                  <td><%= image_tag(move[2] + ".png", class: "movement-image") %></td>
+                <% else %>
+                  <td>-</td>
+                <% end %>
               </tr>
             </tbody>
             <% end %>

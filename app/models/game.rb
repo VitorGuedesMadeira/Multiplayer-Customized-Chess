@@ -67,7 +67,7 @@ class Game < ApplicationRecord
   def check_available_positions(piece, startx, starty)
     valid_positions = []
     state.each_with_index do |row, row_index|
-      row.each_with_index do |col, col_index|
+      row.each_with_index do |_col, col_index|
         next unless valid_target?(startx, starty, row_index, col_index)
 
         case piece
@@ -94,6 +94,8 @@ class Game < ApplicationRecord
     valid_positions
   end
 
+  def check_mate; end
+
   def check_check
     white_valid_positions = []
     black_valid_positions = []
@@ -102,6 +104,7 @@ class Game < ApplicationRecord
     state.each_with_index do |row, row_index|
       row.each_with_index do |col, col_index|
         next if col.empty?
+
         white_king = [col_index, row_index] if col == 'king_1'
         black_king = [col_index, row_index] if col == 'king_2'
         # p '################################'
@@ -135,11 +138,9 @@ class Game < ApplicationRecord
       move_piece(startx, starty, finishx, finishy) if valid_straight_move?(startx, starty, finishx, finishy) && !obstacles_on_path?(startx, starty, finishx, finishy)
     when 'queen_1', 'queen_2'
       move_piece(startx, starty, finishx, finishy) if (valid_straight_move?(startx, starty, finishx,
-                                                                            finishy) || valid_diagonal_move?(startx, starty, finishx,
-                                                                                                             finishy)) && !obstacles_on_path?(startx, starty, finishx, finishy)
+                                                                            finishy) || valid_diagonal_move?(startx, starty, finishx, finishy)) && !obstacles_on_path?(startx, starty, finishx, finishy)
     when 'king_1', 'king_2'
       move_piece(startx, starty, finishx, finishy) if (starty - finishy).abs <= 1 && (startx - finishx).abs <= 1 && !obstacles_on_path?(startx, starty, finishx, finishy)
-
     end
   end
 
@@ -154,12 +155,27 @@ class Game < ApplicationRecord
   end
 
   def move_piece(startx, starty, finishx, finishy)
-    self.turn += 1
     moved_piece = state[starty][startx]
-    state[finishy][finishx] = state[starty][startx]
+    target_position = state[finishy][finishx]
+
+    state[finishy][finishx] = moved_piece
     state[starty][startx] = ''
-    # Adds move to moves
-    moves << [startx, starty, finishx, finishy, moved_piece]
+
+    if turn.even? && check_check[0]
+      state[starty][startx] = moved_piece
+      state[finishy][finishx] = target_position
+      return
+    end
+
+    if turn.odd? && check_check[1]
+      state[starty][startx] = moved_piece
+      state[finishy][finishx] = target_position
+      return
+    end
+
+    self.turn += 1
+
+    moves << [startx, starty, finishx, finishy, moved_piece, target_position]
   end
 
   def valid_diagonal_move?(startx, starty, finishx, finishy)

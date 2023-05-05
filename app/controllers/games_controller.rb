@@ -31,7 +31,7 @@ class GamesController < ApplicationController
 
   def check_positions
     available_positions = @game.check_available_positions(params[:piece], params[:currentx].to_i, params[:currenty].to_i)
-    #p "####################################"
+    # p "####################################"
     # p params[:piece]
     # p params[:currentx].to_i
     # p params[:currenty].to_i
