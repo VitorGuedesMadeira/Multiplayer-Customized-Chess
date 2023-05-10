@@ -96,18 +96,66 @@ class Game < ApplicationRecord
 
   def check_mate
     if turn.even? && check_check[0]
-      if check_available_positions(check_check[2], check_check[2][0], check_check[2][1]).empty?
-        p "######################################"
-        p "CHECK MATE! (Black wins)"
+      white_valid_positions = []
+      state.each_with_index do |row, row_index|
+        row.each_with_index do |col, col_index|
+          next if col.empty? || col.split('_')[1].to_i == 2
+
+          white_valid_positions = check_available_positions(col, col_index, row_index) if col.split('_')[1].to_i == 1
+
+          white_valid_positions.each do |position|
+            moved_piece = state[row_index][col_index]
+            target_position = state[position[1]][position[0]]
+
+            state[position[1]][position[0]] = moved_piece
+            state[row_index][col_index] = ''
+
+            unless check_check[0]
+              state[row_index][col_index] = moved_piece
+              state[position[1]][position[0]] = target_position
+              return false
+
+            end
+
+            state[row_index][col_index] = moved_piece
+            state[position[1]][position[0]] = target_position
+          end
+        end
       end
     end
 
     if turn.odd? && check_check[1]
-      if check_available_positions(check_check[3], check_check[3][0], check_check[3][1]).empty?
-        p "######################################"
-        p "CHECK MATE! (White wins)"
+
+      black_valid_positions = []
+      state.each_with_index do |row, row_index|
+        row.each_with_index do |col, col_index|
+          next if col.empty? || col.split('_')[1].to_i == 1
+
+          black_valid_positions = check_available_positions(col, col_index, row_index) if col.split('_')[1].to_i == 2
+
+          black_valid_positions.each do |position|
+            moved_piece = state[row_index][col_index]
+            target_position = state[position[1]][position[0]]
+            # p moved_piece
+            # p target_position
+            state[position[1]][position[0]] = moved_piece
+            state[row_index][col_index] = ''
+
+            unless check_check[1]
+              state[row_index][col_index] = moved_piece
+              state[position[1]][position[0]] = target_position
+              return false
+
+            end
+
+            state[row_index][col_index] = moved_piece
+            state[position[1]][position[0]] = target_position
+          end
+        end
       end
+
     end
+    true
   end
 
   def check_check
@@ -126,7 +174,7 @@ class Game < ApplicationRecord
         black_valid_positions << check_available_positions(col, col_index, row_index) if col.split('_')[1].to_i == 2
       end
     end
-    [black_valid_positions.flatten(1).include?(white_king), white_valid_positions.flatten(1).include?(black_king), white_king, black_king]
+    [black_valid_positions.flatten(1).include?(white_king), white_valid_positions.flatten(1).include?(black_king)]
   end
 
   def valid_target?(startx, starty, finishx, finishy)
@@ -176,24 +224,32 @@ class Game < ApplicationRecord
     if turn.even? && check_check[0]
       state[starty][startx] = moved_piece
       state[finishy][finishx] = target_position
-      p "##########################"
-      p "Your king will be checked!"
-      p "##########################"
+      p '##########################'
+      p 'Your king will be checked!'
+      p '##########################'
       return
     end
 
     if turn.odd? && check_check[1]
       state[starty][startx] = moved_piece
       state[finishy][finishx] = target_position
-      p "##########################"
-      p "Your king will be checked!"
-      p "##########################"
+      p '##########################'
+      p 'Your king will be checked!'
+      p '##########################'
       return
     end
 
     self.turn += 1
     moves << [startx, starty, finishx, finishy, moved_piece, target_position]
-    check_mate
+    if check_mate && turn.even?
+      p '#####################'
+      p 'Black wins!'
+      p '#####################'
+    elsif check_mate && turn.odd?
+      p '#####################'
+      p 'White wins!'
+      p '#####################'
+    end
   end
 
   def valid_diagonal_move?(startx, starty, finishx, finishy)
@@ -242,12 +298,16 @@ class Game < ApplicationRecord
   end
 
   def pawn_one(startx, starty, finishx, finishy)
+    return unless state[finishy][finishx].empty?
+
     (starty - finishy == 1 && startx == finishx && state[finishy][finishx] == '') ||
       (starty - finishy == 1 && state[finishy][finishx].split('_')[1] != state[starty][startx].split('_')[1] && (startx - finishx).abs == 1 && state[finishy][finishx] != '') ||
       (starty - finishy == 2 && startx == finishx && starty == state.length - 2)
   end
 
   def pawn_two(startx, starty, finishx, finishy)
+    return unless state[finishy][finishx].empty?
+
     (finishy - starty == 1 && startx == finishx && state[finishy][finishx] == '') ||
       (finishy - starty == 1 && state[finishy][finishx].split('_')[1] != state[starty][startx].split('_')[1] && (startx - finishx).abs == 1 && state[finishy][finishx] != '') ||
       (finishy - starty == 2 && startx == finishx && starty == 1)
