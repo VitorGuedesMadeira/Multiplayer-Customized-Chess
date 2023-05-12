@@ -298,19 +298,19 @@ class Game < ApplicationRecord
   end
 
   def pawn_one(startx, starty, finishx, finishy)
-    return unless state[finishy][finishx].empty?
+    # return unless state[finishy][finishx].empty?
 
     (starty - finishy == 1 && startx == finishx && state[finishy][finishx] == '') ||
       (starty - finishy == 1 && state[finishy][finishx].split('_')[1] != state[starty][startx].split('_')[1] && (startx - finishx).abs == 1 && state[finishy][finishx] != '') ||
-      (starty - finishy == 2 && startx == finishx && starty == state.length - 2)
+      ((starty - finishy == 2 && startx == finishx && starty == state.length - 2) if state[finishy][finishx].empty?)
   end
 
   def pawn_two(startx, starty, finishx, finishy)
-    return unless state[finishy][finishx].empty?
+    # return unless state[finishy][finishx].empty?
 
     (finishy - starty == 1 && startx == finishx && state[finishy][finishx] == '') ||
       (finishy - starty == 1 && state[finishy][finishx].split('_')[1] != state[starty][startx].split('_')[1] && (startx - finishx).abs == 1 && state[finishy][finishx] != '') ||
-      (finishy - starty == 2 && startx == finishx && starty == 1)
+      ((finishy - starty == 2 && startx == finishx && starty == 1) if state[finishy][finishx].empty?)
   end
 
   def knight(startx, starty, finishx, finishy)
