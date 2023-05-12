@@ -13,6 +13,7 @@ class Game < ApplicationRecord
   enum time: { ten_minutes: 0, five_minutes: 1, one_minute: 2 }
   enum theme: { default: 0, harry_potter: 1, lotr: 2 }
   enum mode: { one_vs_one: 0, two_vs_two: 1, free_for_all: 2 }
+  enum status: { open: 0, ongoing: 1, finished: 2 }
 
   before_create :set_board
 
@@ -95,6 +96,9 @@ class Game < ApplicationRecord
   end
 
   def check_mate
+    if check_check[0] == false && check_check[1] == false
+      return false
+    end
     if turn.even? && check_check[0]
       white_valid_positions = []
       state.each_with_index do |row, row_index|
@@ -110,7 +114,7 @@ class Game < ApplicationRecord
             state[position[1]][position[0]] = moved_piece
             state[row_index][col_index] = ''
 
-            unless check_check[0]
+            if !check_check[0]
               state[row_index][col_index] = moved_piece
               state[position[1]][position[0]] = target_position
               return false
@@ -125,7 +129,6 @@ class Game < ApplicationRecord
     end
 
     if turn.odd? && check_check[1]
-
       black_valid_positions = []
       state.each_with_index do |row, row_index|
         row.each_with_index do |col, col_index|
@@ -136,12 +139,11 @@ class Game < ApplicationRecord
           black_valid_positions.each do |position|
             moved_piece = state[row_index][col_index]
             target_position = state[position[1]][position[0]]
-            # p moved_piece
-            # p target_position
+
             state[position[1]][position[0]] = moved_piece
             state[row_index][col_index] = ''
 
-            unless check_check[1]
+            if !check_check[1]
               state[row_index][col_index] = moved_piece
               state[position[1]][position[0]] = target_position
               return false
@@ -174,6 +176,7 @@ class Game < ApplicationRecord
         black_valid_positions << check_available_positions(col, col_index, row_index) if col.split('_')[1].to_i == 2
       end
     end
+    # [is white king in check, is black king in check]
     [black_valid_positions.flatten(1).include?(white_king), white_valid_positions.flatten(1).include?(black_king)]
   end
 
@@ -239,16 +242,29 @@ class Game < ApplicationRecord
       return
     end
 
+
+    if moved_piece == 'pawn_1' && finishy == 0
+      state[finishy][finishx] = "queen_1"
+    elsif moved_piece == 'pawn_2' && finishy == 7
+      state[finishy][finishx] = "queen_2"
+    end
+
+
+
     self.turn += 1
     moves << [startx, starty, finishx, finishy, moved_piece, target_position]
     if check_mate && turn.even?
       p '#####################'
       p 'Black wins!'
       p '#####################'
+      self.status = 'finished'
+ 
     elsif check_mate && turn.odd?
       p '#####################'
       p 'White wins!'
       p '#####################'
+      self.status = 'finished'
+
     end
   end
 
@@ -298,7 +314,6 @@ class Game < ApplicationRecord
   end
 
   def pawn_one(startx, starty, finishx, finishy)
-    # return unless state[finishy][finishx].empty?
 
     (starty - finishy == 1 && startx == finishx && state[finishy][finishx] == '') ||
       (starty - finishy == 1 && state[finishy][finishx].split('_')[1] != state[starty][startx].split('_')[1] && (startx - finishx).abs == 1 && state[finishy][finishx] != '') ||
@@ -306,7 +321,6 @@ class Game < ApplicationRecord
   end
 
   def pawn_two(startx, starty, finishx, finishy)
-    # return unless state[finishy][finishx].empty?
 
     (finishy - starty == 1 && startx == finishx && state[finishy][finishx] == '') ||
       (finishy - starty == 1 && state[finishy][finishx].split('_')[1] != state[starty][startx].split('_')[1] && (startx - finishx).abs == 1 && state[finishy][finishx] != '') ||

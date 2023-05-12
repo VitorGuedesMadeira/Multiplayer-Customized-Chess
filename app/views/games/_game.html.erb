@@ -34,7 +34,7 @@
 
 <div class="information">
   <div class="information-div">
-    <h1>Game #<%= game.id %></h1>
+    <h1>Game #<%= game.id %> <%= game.status %></h1>
     <p>Players: <%= game.players %></p>
     <p>Turn: <%= game.turn % 2 == 0 ? "White" : "Black" %></p>
     <p>Time: <%= game.time %></p>
