@@ -96,9 +96,8 @@ class Game < ApplicationRecord
   end
 
   def check_mate
-    if check_check[0] == false && check_check[1] == false
-      return false
-    end
+    return false if check_check[0] == false && check_check[1] == false
+
     if turn.even? && check_check[0]
       white_valid_positions = []
       state.each_with_index do |row, row_index|
@@ -114,7 +113,7 @@ class Game < ApplicationRecord
             state[position[1]][position[0]] = moved_piece
             state[row_index][col_index] = ''
 
-            if !check_check[0]
+            unless check_check[0]
               state[row_index][col_index] = moved_piece
               state[position[1]][position[0]] = target_position
               return false
@@ -143,7 +142,7 @@ class Game < ApplicationRecord
             state[position[1]][position[0]] = moved_piece
             state[row_index][col_index] = ''
 
-            if !check_check[1]
+            unless check_check[1]
               state[row_index][col_index] = moved_piece
               state[position[1]][position[0]] = target_position
               return false
@@ -243,10 +242,10 @@ class Game < ApplicationRecord
     end
 
 
-    if moved_piece == 'pawn_1' && finishy == 0
-      state[finishy][finishx] = "queen_1"
+    if moved_piece == 'pawn_1' && finishy.zero?
+      state[finishy][finishx] = 'queen_1'
     elsif moved_piece == 'pawn_2' && finishy == 7
-      state[finishy][finishx] = "queen_2"
+      state[finishy][finishx] = 'queen_2'
     end
 
 
@@ -258,7 +257,7 @@ class Game < ApplicationRecord
       p 'Black wins!'
       p '#####################'
       self.status = 'finished'
- 
+
     elsif check_mate && turn.odd?
       p '#####################'
       p 'White wins!'
@@ -314,14 +313,12 @@ class Game < ApplicationRecord
   end
 
   def pawn_one(startx, starty, finishx, finishy)
-
     (starty - finishy == 1 && startx == finishx && state[finishy][finishx] == '') ||
       (starty - finishy == 1 && state[finishy][finishx].split('_')[1] != state[starty][startx].split('_')[1] && (startx - finishx).abs == 1 && state[finishy][finishx] != '') ||
       ((starty - finishy == 2 && startx == finishx && starty == state.length - 2) if state[finishy][finishx].empty?)
   end
 
   def pawn_two(startx, starty, finishx, finishy)
-
     (finishy - starty == 1 && startx == finishx && state[finishy][finishx] == '') ||
       (finishy - starty == 1 && state[finishy][finishx].split('_')[1] != state[starty][startx].split('_')[1] && (startx - finishx).abs == 1 && state[finishy][finishx] != '') ||
       ((finishy - starty == 2 && startx == finishx && starty == 1) if state[finishy][finishx].empty?)

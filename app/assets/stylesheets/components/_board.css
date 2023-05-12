@@ -1,8 +1,11 @@
 .board {
   display: flex;
+  align-items: center;
+  justify-content: center;
   flex-direction: column;
   border-radius: 0.25rem;
   overflow: hidden;
+  position: relative;
 }
 
 .row {
@@ -17,6 +20,19 @@
   align-items: center;
   background-color: whitesmoke;
   color: transparent;
+  position: relative;
+}
+
+.cell .test {
+  display: none;
+  color: black;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.cell .test.show {
+  display: flex;
 }
 
 .row:nth-child(2n) .cell:nth-child(2n) {
@@ -43,6 +59,43 @@
 
 .over {
   background-color: #354426 !important;
+}
+
+.finished {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  position: absolute;
+  background-color: white;
+  padding: 3rem;
+  counter-reset: black;
+  box-shadow: 0 0 5px black;
+  border-radius: 0.25rem;
+  background-image: linear-gradient(to bottom, #8c939b, white);
+  animation: fade 0.3s;
+}
+
+.finished.hide {
+  display: none;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.close-button {
+  font-weight: 900;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
 }
 
 .pawn_1 {

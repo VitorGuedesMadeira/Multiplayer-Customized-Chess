@@ -15,8 +15,26 @@
         <% row.each_with_index do |cell, cell_index| %>
         <div class="cell <%= cell %>" id="<%= "#{cell}-#{game.id}-#{cell_index}-#{row_index}"%>" draggable="true" data-action="dragstart->drag#dragStart dragover->drag#dragOver dragenter->drag#dragEnter drop->drag#dragDrop dragend->drag#dragEnd dragleave->drag#dragLeave">
           <%= cell %>
+          <div class="test">
+            Queen Bishop Rock Knight
+          </div>
         </div>
         <% end %>
+      </div>
+    <% end %>
+
+    <% if game.status == 'finished' %>
+      <div class="finished">
+        <button class="close-button button2">X</button>
+        <% if game.status == "finished" && game.turn.even? %>
+          <h2>Black Won!</h2>
+        <% else %>
+          <h2>White Won!</h2>
+        <% end %>
+        <p>Check Mate!</p>
+        <p>Rating 614 +8</p>
+        <p>Rating 614 -8</p>
+        <%= link_to "New game", new_game_path, class: "button1" %>
       </div>
     <% end %>
   </div>
