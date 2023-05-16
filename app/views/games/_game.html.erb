@@ -1,12 +1,20 @@
+<% moves = get_moves(game) %>
+
 <div class="game">
   <div class="player-info">
     <div class="player">
       <div class="player-image">
         Image
       </div>
-      <div>
-        <p>Player</p>
-        <p>Pieces</p>
+      <div class="name-and-pieces">
+        <p>Username</p>
+        <div class="killed-pieces">
+          <% moves.each do |move| %>
+            <% if move[2] != '' && move[2].split('_')[1] != '2' %>
+              <%= image_tag("pieces/" + move[2] + ".png", class: "killed-piece") %>
+            <% end %>
+          <% end %>
+        </div>
       </div>
     </div>
 
@@ -75,9 +83,15 @@
       <div class="player-image">
         Image
       </div>
-      <div>
-        <p>Player</p>
-        <p>Pieces</p>
+      <div class="name-and-pieces">
+        <p>Username</p>
+        <div class="killed-pieces">
+          <% moves.each do |move| %>
+            <% if move[2] != '' && move[2].split('_')[1] != '1' %>
+              <%= image_tag("pieces/" + move[2] + ".png", class: "killed-piece") %>
+            <% end %>
+          <% end %>
+        </div>
       </div>
     </div>
 
@@ -100,8 +114,6 @@
     <p>Turn: <%= game.turn % 2 == 0 ? "White" : "Black" %></p>
     <p>Time: <%= game.time %></p>
   </div>
-
-  <% moves = get_moves(game) %>
 
   <div class="information-div">
     <p>Moves:</p>

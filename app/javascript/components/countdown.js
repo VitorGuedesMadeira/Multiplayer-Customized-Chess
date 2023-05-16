@@ -102,9 +102,14 @@ function pauseCountdown2() {
   paused2 = true;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+const something1 = () => {
   startCountdown1();
-  clearInterval(countdownTimer1);
-  paused1 = true;
-});
-document.addEventListener('DOMContentLoaded', startCountdown2);
+  pauseCountdown2();
+}
+
+const something2 = () => {
+  startCountdown2()
+}
+
+document.addEventListener('DOMContentLoaded', something1);
+document.addEventListener('DOMContentLoaded', something2);

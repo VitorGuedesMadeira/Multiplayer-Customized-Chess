@@ -251,7 +251,9 @@ class Game < ApplicationRecord
     end
 
     self.turn += 1
+
     moves << [startx, starty, finishx, finishy, moved_piece, target_position]
+
     if check_mate && turn.even?
       p '#####################'
       p 'Black wins!'
