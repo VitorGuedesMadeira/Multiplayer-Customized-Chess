@@ -29,3 +29,8 @@
   color: white;
   border-radius: 0.25rem;
 }
+
+.timer.activated {
+  border: 3px solid #7d3131;
+
+}

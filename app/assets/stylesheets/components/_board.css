@@ -13,8 +13,8 @@
 }
 
 .cell {
-  width: 4rem;
-  height: 4rem;
+  width: 3.5rem;
+  height: 3.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -100,38 +100,42 @@
 
 .promotion-selected {
   cursor: pointer;
+  width: 4rem;
+  height: 4rem;
+  color: transparent;
+  background-size: cover;
 }
 
 .promotion-selected.rock_1 {
-  color: transparent;
-  background-image: url('rock_1.png');
-  background-size: cover;
-  width: 4rem;
-  height: 4rem;
+  background-image: url('pieces/rock_1.png');
 }
 
 .promotion-selected.knight_1 {
-  color: transparent;
-  background-image: url('knight_1.png');
-  background-size: cover;
-  width: 4rem;
-  height: 4rem;
+  background-image: url('pieces/knight_1.png');
 }
 
 .promotion-selected.bishop_1 {
-  color: transparent;
-  background-image: url('bishop_1.png');
-  background-size: cover;
-  width: 4rem;
-  height: 4rem;
+  background-image: url('pieces/bishop_1.png');
 }
 
 .promotion-selected.queen_1 {
-  color: transparent;
-  background-image: url('queen_1.png');
-  background-size: cover;
-  width: 4rem;
-  height: 4rem;
+  background-image: url('pieces/queen_1.png');
+}
+
+.promotion-selected.rock_2 {
+  background-image: url('pieces/rock_2.png');
+}
+
+.promotion-selected.knight_2 {
+  background-image: url('pieces/knight_2.png');
+}
+
+.promotion-selected.bishop_2 {
+  background-image: url('pieces/bishop_2.png');
+}
+
+.promotion-selected.queen_2 {
+  background-image: url('pieces/queen_2.png');
 }
 
 .test {

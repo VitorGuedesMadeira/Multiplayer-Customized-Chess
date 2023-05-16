@@ -8,7 +8,11 @@
           <div class='mini-row'>
             <% row.each do |cell| %>
               <div class="mini-cell <%= cell %>">
-                <%= cell %>
+                <% if !cell.empty? && cell != 'x' %>
+                  <%= image_tag("pieces/#{cell}", class: "mini-image") %>
+                <% else %>
+                  <%= cell %>
+                <% end %>
               </div>
             <% end %>
           </div>

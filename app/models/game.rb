@@ -35,20 +35,20 @@ class Game < ApplicationRecord
                    ]
                  when 'two_vs_two'
                    [
-                     ['x', 'x', 'x', 'rock_2', 'knight_2', 'bishop_2', 'queen_2', 'king_2', 'bishop_2', 'knight_2', 'rock_2', 'x', 'x', 'x'],
-                     ['x', 'x', 'x', 'pawn_2', 'pawn_2', 'pawn_2', 'pawn_2', 'pawn_2', 'pawn_2', 'pawn_2', 'pawn_2', 'x', 'x', 'x'],
+                     ['x', 'x', 'x', 'rock_5', 'knight_5', 'bishop_5', 'queen_5', 'king_5', 'bishop_5', 'knight_5', 'rock_5', 'x', 'x', 'x'],
+                     ['x', 'x', 'x', 'pawn_5', 'pawn_5', 'pawn_5', 'pawn_5', 'pawn_5', 'pawn_5', 'pawn_5', 'pawn_5', 'x', 'x', 'x'],
                      ['x', 'x', 'x', '', '', '', '', '', '', '', '', 'x', 'x', 'x'],
-                     ['rock_2', 'pawn_2', '', '', '', '', '', '', '', '', '', '', 'pawn_1', 'rock_1'],
-                     ['knight_2', 'pawn_2', '', '', '', '', '', '', '', '', '', '', 'pawn_1', 'knight_1'],
-                     ['bishop_2', 'pawn_2', '', '', '', '', '', '', '', '', '', '', 'pawn_1', 'bishop_1'],
-                     ['king_2', 'pawn_2', '', '', '', '', '', '', '', '', '', '', 'pawn_1', 'queen_1'],
-                     ['queen_2', 'pawn_2', '', '', '', '', '', '', '', '', '', '', 'pawn_1', 'king_1'],
-                     ['bishop_2', 'pawn_2', '', '', '', '', '', '', '', '', '', '', 'pawn_1', 'bishop_1'],
-                     ['knight_2', 'pawn_2', '', '', '', '', '', '', '', '', '', '', 'pawn_1', 'knight_1'],
-                     ['rock_2', 'pawn_2', '', '', '', '', '', '', '', '', '', '', 'pawn_1', 'rock_1'],
+                     ['rock_4', 'pawn_4', '', '', '', '', '', '', '', '', '', '', 'pawn_6', 'rock_6'],
+                     ['knight_4', 'pawn_4', '', '', '', '', '', '', '', '', '', '', 'pawn_6', 'knight_6'],
+                     ['bishop_4', 'pawn_4', '', '', '', '', '', '', '', '', '', '', 'pawn_6', 'bishop_6'],
+                     ['king_4', 'pawn_4', '', '', '', '', '', '', '', '', '', '', 'pawn_6', 'queen_6'],
+                     ['queen_4', 'pawn_4', '', '', '', '', '', '', '', '', '', '', 'pawn_6', 'king_6'],
+                     ['bishop_4', 'pawn_4', '', '', '', '', '', '', '', '', '', '', 'pawn_6', 'bishop_6'],
+                     ['knight_4', 'pawn_4', '', '', '', '', '', '', '', '', '', '', 'pawn_6', 'knight_6'],
+                     ['rock_4', 'pawn_4', '', '', '', '', '', '', '', '', '', '', 'pawn_6', 'rock_6'],
                      ['x', 'x', 'x', '', '', '', '', '', '', '', '', 'x', 'x', 'x'],
-                     ['x', 'x', 'x', 'pawn_1', 'pawn_1', 'pawn_1', 'pawn_1', 'pawn_1', 'pawn_1', 'pawn_1', 'pawn_1', 'x', 'x', 'x'],
-                     ['x', 'x', 'x', 'rock_1', 'knight_1', 'bishop_1', 'queen_1', 'king_1', 'bishop_1', 'knight_1', 'rock_1', 'x', 'x', 'x']
+                     ['x', 'x', 'x', 'pawn_3', 'pawn_3', 'pawn_3', 'pawn_3', 'pawn_3', 'pawn_3', 'pawn_3', 'pawn_3', 'x', 'x', 'x'],
+                     ['x', 'x', 'x', 'rock_3', 'knight_3', 'bishop_3', 'queen_3', 'king_3', 'bishop_3', 'knight_3', 'rock_3', 'x', 'x', 'x']
                    ]
                  when 'free_for_all'
                    [
@@ -255,13 +255,11 @@ class Game < ApplicationRecord
       p 'Black wins!'
       p '#####################'
       self.status = 'finished'
-
     elsif check_mate && turn.odd?
       p '#####################'
       p 'White wins!'
       p '#####################'
       self.status = 'finished'
-
     end
   end
 
@@ -332,5 +330,9 @@ class Game < ApplicationRecord
   def knight(startx, starty, finishx, finishy)
     ((starty - finishy).abs == 2 && (startx - finishx).abs == 1) ||
       ((starty - finishy).abs == 1 && (startx - finishx).abs == 2)
+  end
+
+  def castle
+
   end
 end

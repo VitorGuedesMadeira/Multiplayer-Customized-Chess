@@ -1,12 +1,23 @@
 <div class="game">
   <div class="player-info">
     <div class="player">
-      <div class="player-image">Image</div>
-      <p>Player</p>
+      <div class="player-image">
+        Image
+      </div>
+      <div>
+        <p>Player</p>
+        <p>Pieces</p>
+      </div>
     </div>
-    <div class="timer">
-      Timer
-    </div>
+    <% if game.turn.odd? %>
+      <div class="timer activated">
+        Timer
+      </div>
+    <% else %>
+      <div class="timer">
+        Timer
+      </div>
+    <% end %>
   </div>
 
   <div class="board" data-controller="drag">
@@ -15,7 +26,7 @@
         <% row.each_with_index do |cell, cell_index| %>
         <div class="cell <%= cell %>" id=<%= "#{cell}-#{game.id}-#{cell_index}-#{row_index}" %> data-action="dragstart->drag#dragStart dragover->drag#dragOver dragenter->drag#dragEnter drop->drag#dragDrop dragend->drag#dragEnd dragleave->drag#dragLeave">
           <% if !cell.empty? && cell != 'x' %>
-            <%= image_tag("#{cell}", class: "test", id: "#{cell}-#{game.id}-#{cell_index}-#{row_index}", draggable: "true") %>
+            <%= image_tag("pieces/#{cell}", class: "test", id: "#{cell}-#{game.id}-#{cell_index}-#{row_index}", draggable: "true") %>
           <% else %>
             <%= cell %>
           <% end %>
@@ -43,10 +54,17 @@
       <div class="finished">
         Promotion
         <div>
+        <% if game.turn.odd? %>
           <button class="promotion-selected rock_1" id="<%= "rock_1-#{game.id}-#{game.promotion[0]}-#{game.promotion[1]}-#{game.promotion[2]}"%>"></button>
           <button class="promotion-selected knight_1" id="<%= "knight_1-#{game.id}-#{game.promotion[0]}-#{game.promotion[1]}-#{game.promotion[2]}"%>"></button>
           <button class="promotion-selected bishop_1" id="<%= "bishop_1-#{game.id}-#{game.promotion[0]}-#{game.promotion[1]}-#{game.promotion[2]}"%>"></button>
           <button class="promotion-selected queen_1" id="<%= "queen_1-#{game.id}-#{game.promotion[0]}-#{game.promotion[1]}-#{game.promotion[2]}"%>"></button>
+        <% else %>
+          <button class="promotion-selected rock_2" id="<%= "rock_2-#{game.id}-#{game.promotion[0]}-#{game.promotion[1]}-#{game.promotion[2]}"%>"></button>
+          <button class="promotion-selected knight_2" id="<%= "knight_2-#{game.id}-#{game.promotion[0]}-#{game.promotion[1]}-#{game.promotion[2]}"%>"></button>
+          <button class="promotion-selected bishop_2" id="<%= "bishop_2-#{game.id}-#{game.promotion[0]}-#{game.promotion[1]}-#{game.promotion[2]}"%>"></button>
+          <button class="promotion-selected queen_2" id="<%= "queen_2-#{game.id}-#{game.promotion[0]}-#{game.promotion[1]}-#{game.promotion[2]}"%>"></button>
+        <% end %>
         </div>
       </div>
     <% end %>
@@ -57,9 +75,15 @@
       <div class="player-image">Image</div>
       <p>Player</p>
     </div>
-    <div class="timer">
-      Timer
-    </div>
+    <% if game.turn.even? %>
+      <div class="timer activated">
+        Timer
+      </div>
+    <% else %>
+      <div class="timer">
+        Timer
+      </div>
+    <% end %>
   </div>
 </div>
 
@@ -92,11 +116,11 @@
             <tbody>
               <tr>
                 <td><%= index + 1 %></td>
-                <td><%= image_tag(move[1] + ".png", class: "movement-image") %></td>
+                <td><%= image_tag("pieces/" + move[1] + ".png", class: "movement-image") %></td>
                 <td><%= move[0][0] + move[0][1] %></td>
                 <td><%= move[0][2] + move[0][3] %></td>
                 <% if !move[2].empty? %>
-                  <td><%= image_tag(move[2] + ".png", class: "movement-image") %></td>
+                  <td><%= image_tag("pieces/" + move[2] + ".png", class: "movement-image") %></td>
                 <% else %>
                   <td>-</td>
                 <% end %>
