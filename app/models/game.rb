@@ -207,13 +207,15 @@ class Game < ApplicationRecord
   end
 
   def move(piece, startx, starty, finishx, finishy)
-    if turn.even?
-      return if piece.split('_')[1] == '2'
-    elsif piece.split('_')[1] == '1'
-      return
+    if self.promotion.empty?
+      if turn.even?
+        return if piece.split('_')[1] == '2'
+      elsif piece.split('_')[1] == '1'
+        return
+      end
+      case_move(piece, startx, starty, finishx, finishy)
+      save
     end
-    case_move(piece, startx, starty, finishx, finishy)
-    save
   end
 
   def move_piece(startx, starty, finishx, finishy)

@@ -37,7 +37,6 @@ class GamesController < ApplicationController
 
   def promotion
     @game.set_promotion(params[:currenty], params[:currentx], params[:piece])
-    @game.check_mate
     redirect_to game_path(@game)
   end
 
