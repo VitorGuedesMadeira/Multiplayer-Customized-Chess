@@ -23,18 +23,6 @@
   position: relative;
 }
 
-.cell .test {
-  display: none;
-  color: black;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.cell .test.show {
-  display: flex;
-}
-
 .row:nth-child(2n) .cell:nth-child(2n) {
   background-color: #8c939b;
 }
@@ -98,150 +86,6 @@
   right: 0.5rem;
 }
 
-.pawn_1 {
-  background-image: url('pawn_1.png') !important;
-  background-size: cover;
-  cursor: grab;
-}
-
-.rock_1 {
-  background-image: url('rock_1.png') !important;
-  background-size: cover;
-  cursor: grab;
-}
-
-.knight_1 {
-  background-image: url('knight_1.png') !important;
-  background-size: cover;
-  cursor: grab;
-}
-
-.bishop_1 {
-  background-image: url('bishop_1.png') !important;
-  background-size: cover;
-  cursor: grab;
-}
-
-.queen_1 {
-  background-image: url('queen_1.png') !important;
-  background-size: cover;
-  cursor: grab;
-}
-
-.king_1 {
-  background-image: url('king_1.png') !important;
-  background-size: cover;
-  cursor: grab;
-}
-
-.pawn_2 {
-  background-image: url('pawn_2.png') !important;
-  background-size: cover;
-  cursor: grab;
-}
-
-.rock_2 {
-  background-image: url('rock_2.png') !important;
-  background-size: cover;
-  cursor: grab;
-}
-
-.knight_2 {
-  background-image: url('knight_2.png') !important;
-  background-size: cover;
-  cursor: grab;
-}
-
-.bishop_2 {
-  background-image: url('bishop_2.png') !important;
-  background-size: cover;
-  cursor: grab;
-}
-
-.queen_2 {
-  background-image: url('queen_2.png') !important;
-  background-size: cover;
-  cursor: grab;
-}
-
-.king_2 {
-  background-image: url('king_2.png') !important;
-  background-size: cover;
-  cursor: grab;
-}
-
-.pawn_3 {
-  background-image: url('pawn_1.png') !important;
-  background-size: cover;
-  cursor: grab;
-}
-
-.rock_3 {
-  background-image: url('rock_1.png') !important;
-  background-size: cover;
-  cursor: grab;
-}
-
-.knight_3 {
-  background-image: url('knight_1.png') !important;
-  background-size: cover;
-  cursor: grab;
-}
-
-.bishop_3 {
-  background-image: url('bishop_1.png') !important;
-  background-size: cover;
-  cursor: grab;
-}
-
-.queen_3 {
-  background-image: url('queen_1.png') !important;
-  background-size: cover;
-  cursor: grab;
-}
-
-.king_3 {
-  background-image: url('king_1.png') !important;
-  background-size: cover;
-  cursor: grab;
-}
-
-.pawn_4 {
-  background-image: url('pawn_1.png') !important;
-  background-size: cover;
-  cursor: grab;
-}
-
-.rock_4 {
-  background-image: url('rock_1.png') !important;
-  background-size: cover;
-  cursor: grab;
-}
-
-.knight_4 {
-  background-image: url('knight_1.png') !important;
-  background-size: cover;
-  cursor: grab;
-}
-
-.bishop_4 {
-  background-image: url('bishop_1.png') !important;
-  background-size: cover;
-  cursor: grab;
-}
-
-.queen_4 {
-  background-image: url('queen_1.png') !important;
-  background-size: cover;
-  cursor: grab;
-}
-
-.king_4 {
-  background-image: url('king_1.png') !important;
-  background-blend-mode: color;
-  cursor: grab;
-}
-
 .x {
   background-color: #312e2b;
 }
@@ -252,4 +96,46 @@
 
 .row:nth-child(2n-1) .cell.x:nth-child(2n-1) {
   background-color: #312e2b;
+}
+
+.promotion-selected {
+  cursor: pointer;
+}
+
+.promotion-selected.rock_1 {
+  color: transparent;
+  background-image: url('rock_1.png');
+  background-size: cover;
+  width: 4rem;
+  height: 4rem;
+}
+
+.promotion-selected.knight_1 {
+  color: transparent;
+  background-image: url('knight_1.png');
+  background-size: cover;
+  width: 4rem;
+  height: 4rem;
+}
+
+.promotion-selected.bishop_1 {
+  color: transparent;
+  background-image: url('bishop_1.png');
+  background-size: cover;
+  width: 4rem;
+  height: 4rem;
+}
+
+.promotion-selected.queen_1 {
+  color: transparent;
+  background-image: url('queen_1.png');
+  background-size: cover;
+  width: 4rem;
+  height: 4rem;
+}
+
+.test {
+  cursor: grab;
+  height: 100%;
+  width: 100%;
 }

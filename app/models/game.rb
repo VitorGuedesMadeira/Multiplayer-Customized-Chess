@@ -9,6 +9,7 @@ class Game < ApplicationRecord
   attribute :turn, :integer, default: 0
   attribute :status, :integer, default: 0
   attribute :moves, :json, default: []
+  attribute :promotion, :json, default: []
 
   enum time: { ten_minutes: 0, five_minutes: 1, one_minute: 2 }
   enum theme: { default: 0, harry_potter: 1, lotr: 2 }
@@ -37,14 +38,14 @@ class Game < ApplicationRecord
                      ['x', 'x', 'x', 'rock_2', 'knight_2', 'bishop_2', 'queen_2', 'king_2', 'bishop_2', 'knight_2', 'rock_2', 'x', 'x', 'x'],
                      ['x', 'x', 'x', 'pawn_2', 'pawn_2', 'pawn_2', 'pawn_2', 'pawn_2', 'pawn_2', 'pawn_2', 'pawn_2', 'x', 'x', 'x'],
                      ['x', 'x', 'x', '', '', '', '', '', '', '', '', 'x', 'x', 'x'],
-                     ['rock_3', 'pawn_3', '', '', '', '', '', '', '', '', '', '', 'pawn_4', 'rock_4'],
-                     ['knight_3', 'pawn_3', '', '', '', '', '', '', '', '', '', '', 'pawn_4', 'knight_4'],
-                     ['bishop_3', 'pawn_3', '', '', '', '', '', '', '', '', '', '', 'pawn_4', 'bishop_4'],
-                     ['king_3', 'pawn_3', '', '', '', '', '', '', '', '', '', '', 'pawn_4', 'queen_4'],
-                     ['queen_3', 'pawn_3', '', '', '', '', '', '', '', '', '', '', 'pawn_4', 'king_4'],
-                     ['bishop_3', 'pawn_3', '', '', '', '', '', '', '', '', '', '', 'pawn_4', 'bishop_4'],
-                     ['knight_3', 'pawn_3', '', '', '', '', '', '', '', '', '', '', 'pawn_4', 'knight_4'],
-                     ['rock_3', 'pawn_3', '', '', '', '', '', '', '', '', '', '', 'pawn_4', 'rock_4'],
+                     ['rock_2', 'pawn_2', '', '', '', '', '', '', '', '', '', '', 'pawn_1', 'rock_1'],
+                     ['knight_2', 'pawn_2', '', '', '', '', '', '', '', '', '', '', 'pawn_1', 'knight_1'],
+                     ['bishop_2', 'pawn_2', '', '', '', '', '', '', '', '', '', '', 'pawn_1', 'bishop_1'],
+                     ['king_2', 'pawn_2', '', '', '', '', '', '', '', '', '', '', 'pawn_1', 'queen_1'],
+                     ['queen_2', 'pawn_2', '', '', '', '', '', '', '', '', '', '', 'pawn_1', 'king_1'],
+                     ['bishop_2', 'pawn_2', '', '', '', '', '', '', '', '', '', '', 'pawn_1', 'bishop_1'],
+                     ['knight_2', 'pawn_2', '', '', '', '', '', '', '', '', '', '', 'pawn_1', 'knight_1'],
+                     ['rock_2', 'pawn_2', '', '', '', '', '', '', '', '', '', '', 'pawn_1', 'rock_1'],
                      ['x', 'x', 'x', '', '', '', '', '', '', '', '', 'x', 'x', 'x'],
                      ['x', 'x', 'x', 'pawn_1', 'pawn_1', 'pawn_1', 'pawn_1', 'pawn_1', 'pawn_1', 'pawn_1', 'pawn_1', 'x', 'x', 'x'],
                      ['x', 'x', 'x', 'rock_1', 'knight_1', 'bishop_1', 'queen_1', 'king_1', 'bishop_1', 'knight_1', 'rock_1', 'x', 'x', 'x']
@@ -117,7 +118,6 @@ class Game < ApplicationRecord
               state[row_index][col_index] = moved_piece
               state[position[1]][position[0]] = target_position
               return false
-
             end
 
             state[row_index][col_index] = moved_piece
@@ -241,14 +241,12 @@ class Game < ApplicationRecord
       return
     end
 
-
+    # Pawn promotion
     if moved_piece == 'pawn_1' && finishy.zero?
-      state[finishy][finishx] = 'queen_1'
+      self.promotion = [finishy, finishx, 'pawn_1']
     elsif moved_piece == 'pawn_2' && finishy == 7
-      state[finishy][finishx] = 'queen_2'
+      self.promotion = [finishy, finishx, 'pawn_2']
     end
-
-
 
     self.turn += 1
     moves << [startx, starty, finishx, finishy, moved_piece, target_position]
@@ -265,6 +263,13 @@ class Game < ApplicationRecord
       self.status = 'finished'
 
     end
+  end
+
+  def set_promotion(y, x, piece)
+    state[y.to_i][x.to_i] = piece
+    self.promotion = []
+    self.status = 'finished' if check_mate
+    save
   end
 
   def valid_diagonal_move?(startx, starty, finishx, finishy)

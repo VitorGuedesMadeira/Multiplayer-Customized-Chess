@@ -21,6 +21,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_25_183635) do
     t.json "moves"
     t.integer "time"
     t.integer "status"
+    t.json "promotion"
     t.integer "theme"
     t.integer "mode"
     t.datetime "created_at", null: false

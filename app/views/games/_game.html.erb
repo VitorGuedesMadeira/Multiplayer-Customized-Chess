@@ -13,11 +13,12 @@
     <% game.state.each_with_index do |row, row_index| %>
       <div class='row'>
         <% row.each_with_index do |cell, cell_index| %>
-        <div class="cell <%= cell %>" id="<%= "#{cell}-#{game.id}-#{cell_index}-#{row_index}"%>" draggable="true" data-action="dragstart->drag#dragStart dragover->drag#dragOver dragenter->drag#dragEnter drop->drag#dragDrop dragend->drag#dragEnd dragleave->drag#dragLeave">
-          <%= cell %>
-          <div class="test">
-            Queen Bishop Rock Knight
-          </div>
+        <div class="cell <%= cell %>" id=<%= "#{cell}-#{game.id}-#{cell_index}-#{row_index}" %> data-action="dragstart->drag#dragStart dragover->drag#dragOver dragenter->drag#dragEnter drop->drag#dragDrop dragend->drag#dragEnd dragleave->drag#dragLeave">
+          <% if !cell.empty? && cell != 'x' %>
+            <%= image_tag("#{cell}", class: "test", id: "#{cell}-#{game.id}-#{cell_index}-#{row_index}", draggable: "true") %>
+          <% else %>
+            <%= cell %>
+          <% end %>
         </div>
         <% end %>
       </div>
@@ -37,6 +38,18 @@
         <%= link_to "New game", new_game_path, class: "button1" %>
       </div>
     <% end %>
+
+    <% if !game.promotion.empty? %>
+      <div class="finished">
+        Promotion
+        <div>
+          <button class="promotion-selected rock_1" id="<%= "rock_1-#{game.id}-#{game.promotion[0]}-#{game.promotion[1]}-#{game.promotion[2]}"%>"></button>
+          <button class="promotion-selected knight_1" id="<%= "knight_1-#{game.id}-#{game.promotion[0]}-#{game.promotion[1]}-#{game.promotion[2]}"%>"></button>
+          <button class="promotion-selected bishop_1" id="<%= "bishop_1-#{game.id}-#{game.promotion[0]}-#{game.promotion[1]}-#{game.promotion[2]}"%>"></button>
+          <button class="promotion-selected queen_1" id="<%= "queen_1-#{game.id}-#{game.promotion[0]}-#{game.promotion[1]}-#{game.promotion[2]}"%>"></button>
+        </div>
+      </div>
+    <% end %>
   </div>
 
   <div class="player-info">
@@ -53,6 +66,7 @@
 <div class="information">
   <div class="information-div">
     <h1>Game #<%= game.id %> <%= game.status %></h1>
+    <p>Promotion: <%= game.promotion %></p>
     <p>Players: <%= game.players %></p>
     <p>Turn: <%= game.turn % 2 == 0 ? "White" : "Black" %></p>
     <p>Time: <%= game.time %></p>

@@ -4,7 +4,7 @@ import { Controller } from '@hotwired/stimulus';
 export default class extends Controller {
   dragStart(event) {
     const targetToBeMoved = event.target;
-    if (targetToBeMoved.innerText != '') {
+    if (targetToBeMoved.classList != 'cell ') {
       event.dataTransfer.setData('text/plain', event.target.id);
 
       const gameID = event.target.id.split('-')[1];
@@ -67,6 +67,9 @@ export default class extends Controller {
     // Get the ID of the drag and drop positions (start and finish)
     const currentID = event.dataTransfer.getData('text/plain');
     const targetID = event.target.id;
+    console.log(currentID)
+    console.log(event.target)
+    console.log(targetID)
 
     const gameID = currentID.split('-')[1];
     const piece = currentID.split('-')[0];

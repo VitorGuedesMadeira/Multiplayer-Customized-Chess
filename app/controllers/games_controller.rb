@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  before_action :set_game, only: %i[show edit update move_piece check_positions]
+  before_action :set_game, only: %i[show edit update move_piece check_positions promotion]
 
   def index
     @mini_games = Game.all.order(id: :asc)
@@ -31,13 +31,14 @@ class GamesController < ApplicationController
 
   def check_positions
     available_positions = @game.check_available_positions(params[:piece], params[:currentx].to_i, params[:currenty].to_i)
-    # p "####################################"
-    # p params[:piece]
-    # p params[:currentx].to_i
-    # p params[:currenty].to_i
-    # p available_positions
     @game.check_check
     render json: available_positions
+  end
+
+  def promotion
+    @game.set_promotion(params[:currenty], params[:currentx], params[:piece])
+    @game.check_mate
+    redirect_to game_path(@game)
   end
 
   private

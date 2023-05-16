@@ -2,3 +2,4 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 import "./components/close-button"
+import "./components/promotion-button"
