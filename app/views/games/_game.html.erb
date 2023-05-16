@@ -9,15 +9,15 @@
         <p>Pieces</p>
       </div>
     </div>
-    <% if game.turn.odd? %>
-      <div class="timer activated">
-        Timer
-      </div>
-    <% else %>
+
       <div class="timer">
-        Timer
+      <div>
+        <button class="start-timer1">Start Countdown</button>
+        <button class="stop-timer1">Stop Countdown</button>
       </div>
-    <% end %>
+        <div id="countdown1"></div>
+      </div>
+
   </div>
 
   <div class="board" data-controller="drag">
@@ -72,18 +72,23 @@
 
   <div class="player-info">
     <div class="player">
-      <div class="player-image">Image</div>
-      <p>Player</p>
+      <div class="player-image">
+        Image
+      </div>
+      <div>
+        <p>Player</p>
+        <p>Pieces</p>
+      </div>
     </div>
-    <% if game.turn.even? %>
-      <div class="timer activated">
-        Timer
-      </div>
-    <% else %>
+
       <div class="timer">
-        Timer
+      <div>
+        <button class="start-timer2">Start Countdown</button>
+        <button class="stop-timer2">Stop Countdown</button>
       </div>
-    <% end %>
+        <div id="countdown2"></div>
+      </div>
+
   </div>
 </div>
 
