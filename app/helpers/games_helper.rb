@@ -3,7 +3,7 @@ module GamesHelper
     game.moves.map do |subarray|
       letters = ('a'..'h').to_a
       numbers = (1..8).to_a.reverse
-      [letters[subarray[0]], numbers[subarray[1]], letters[subarray[2]], numbers[subarray[3]]].join
+      [[letters[subarray[0]], numbers[subarray[1]], letters[subarray[2]], numbers[subarray[3]]].join, subarray[4], subarray[5]]
     end
   end
 end

@@ -1,65 +1,158 @@
-<div id="<%= dom_id(game) %>" style="display: flex">
+<% moves = get_moves(game) %>
 
-  <div class="game">
-    <div class="player-info">
-      <div class="player">
-        <div class="player-image">Image</div>
-        <p>Player</p>
+<div class="game">
+  <div class="player-info">
+    <div class="player">
+      <div class="player-image">
+        Image
       </div>
-      <div class="timer">
-        Timer
-      </div>
-    </div>
-
-    <div class="board" data-controller="drag">
-      <% game.state.each_with_index do |row, row_index| %>
-        <div class='row'>
-          <% row.each_with_index do |cell, cell_index| %>
-          <div class="cell <%= cell %>" id="<%= "#{cell}-#{game.id}-#{cell_index}-#{row_index}"%>" draggable="true" data-action="dragstart->drag#dragStart dragover->drag#dragOver dragenter->drag#dragEnter drop->drag#dragDrop dragend->drag#dragEnd dragleave->drag#dragLeave">
-            <%= cell %>
-          </div>
+      <div class="name-and-pieces">
+        <p>Username</p>
+        <div class="killed-pieces">
+          <% moves.each do |move| %>
+            <% if move[2] != '' && move[2].split('_')[1] != '2' %>
+              <%= image_tag("pieces/" + move[2] + ".png", class: "killed-piece") %>
+            <% end %>
           <% end %>
         </div>
-      <% end %>
+      </div>
     </div>
 
-    <div class="player-info">
-      <div class="player">
-        <div class="player-image">Image</div>
-        <p>Player</p>
-      </div>
       <div class="timer">
-        Timer
+      <div>
+        <button class="start-timer1">Start Countdown</button>
+        <button class="stop-timer1">Stop Countdown</button>
       </div>
+        <div id="countdown1"></div>
+      </div>
+
+  </div>
+
+  <div class="board" data-controller="drag">
+    <% game.state.each_with_index do |row, row_index| %>
+      <div class='row'>
+        <% row.each_with_index do |cell, cell_index| %>
+        <div class="cell <%= cell %>" id=<%= "#{cell}-#{game.id}-#{cell_index}-#{row_index}" %> data-action="dragstart->drag#dragStart dragover->drag#dragOver dragenter->drag#dragEnter drop->drag#dragDrop dragend->drag#dragEnd dragleave->drag#dragLeave">
+          <% if !cell.empty? && cell != 'x' %>
+            <%= image_tag("pieces/#{cell}", class: "test", id: "#{cell}-#{game.id}-#{cell_index}-#{row_index}", draggable: "true") %>
+          <% else %>
+            <%= cell %>
+          <% end %>
+        </div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <% if game.status == 'finished' %>
+      <div class="finished">
+        <button class="close-button button2">X</button>
+        <% if game.status == "finished" && game.turn.even? %>
+          <h2>Black Won!</h2>
+        <% else %>
+          <h2>White Won!</h2>
+        <% end %>
+        <p>Check Mate!</p>
+        <p>Rating 614 +8</p>
+        <p>Rating 614 -8</p>
+        <%= link_to "New game", new_game_path, class: "button1" %>
+      </div>
+    <% end %>
+
+    <% if !game.promotion.empty? %>
+      <div class="finished">
+        Promotion
+        <div>
+        <% if game.turn.odd? %>
+          <button class="promotion-selected rock_1" id="<%= "rock_1-#{game.id}-#{game.promotion[0]}-#{game.promotion[1]}-#{game.promotion[2]}"%>"></button>
+          <button class="promotion-selected knight_1" id="<%= "knight_1-#{game.id}-#{game.promotion[0]}-#{game.promotion[1]}-#{game.promotion[2]}"%>"></button>
+          <button class="promotion-selected bishop_1" id="<%= "bishop_1-#{game.id}-#{game.promotion[0]}-#{game.promotion[1]}-#{game.promotion[2]}"%>"></button>
+          <button class="promotion-selected queen_1" id="<%= "queen_1-#{game.id}-#{game.promotion[0]}-#{game.promotion[1]}-#{game.promotion[2]}"%>"></button>
+        <% else %>
+          <button class="promotion-selected rock_2" id="<%= "rock_2-#{game.id}-#{game.promotion[0]}-#{game.promotion[1]}-#{game.promotion[2]}"%>"></button>
+          <button class="promotion-selected knight_2" id="<%= "knight_2-#{game.id}-#{game.promotion[0]}-#{game.promotion[1]}-#{game.promotion[2]}"%>"></button>
+          <button class="promotion-selected bishop_2" id="<%= "bishop_2-#{game.id}-#{game.promotion[0]}-#{game.promotion[1]}-#{game.promotion[2]}"%>"></button>
+          <button class="promotion-selected queen_2" id="<%= "queen_2-#{game.id}-#{game.promotion[0]}-#{game.promotion[1]}-#{game.promotion[2]}"%>"></button>
+        <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="player-info">
+    <div class="player">
+      <div class="player-image">
+        Image
+      </div>
+      <div class="name-and-pieces">
+        <p>Username</p>
+        <div class="killed-pieces">
+          <% moves.each do |move| %>
+            <% if move[2] != '' && move[2].split('_')[1] != '1' %>
+              <%= image_tag("pieces/" + move[2] + ".png", class: "killed-piece") %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+      <div class="timer">
+      <div>
+        <button class="start-timer2">Start Countdown</button>
+        <button class="stop-timer2">Stop Countdown</button>
+      </div>
+        <div id="countdown2"></div>
+      </div>
+
+  </div>
+</div>
+
+<div class="information">
+  <div class="information-div">
+    <h1>Game #<%= game.id %> <%= game.status %></h1>
+    <p>Promotion: <%= game.promotion %></p>
+    <p>Players: <%= game.players %></p>
+    <p>Turn: <%= game.turn % 2 == 0 ? "White" : "Black" %></p>
+    <p>Time: <%= game.time %></p>
+  </div>
+
+  <div class="information-div">
+    <p>Moves:</p>
+      <div id="moves">
+      <% if moves %>
+          <table>
+            <thead>
+              <tr>
+                <th>Movement</th>
+                <th>Piece</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Target</th>
+              </tr>
+            </thead>
+            <% moves.each_with_index do |move, index| %>
+            <tbody>
+              <tr>
+                <td><%= index + 1 %></td>
+                <td><%= image_tag("pieces/" + move[1] + ".png", class: "movement-image") %></td>
+                <td><%= move[0][0] + move[0][1] %></td>
+                <td><%= move[0][2] + move[0][3] %></td>
+                <% if !move[2].empty? %>
+                  <td><%= image_tag("pieces/" + move[2] + ".png", class: "movement-image") %></td>
+                <% else %>
+                  <td>-</td>
+                <% end %>
+              </tr>
+            </tbody>
+            <% end %>
+          </table>
+      <% end %>
     </div>
   </div>
 
-  <div class="information">
-    <div>
-      <h1>Game: <%= game.id %></h1>
-      <p>Players: <%= game.players %></p>
-      <p>Turn: <%= game.turn === 0 ? "White" : "Black" %></p>
-      <p>Time: <%= game.time %></p>
-    </div>
-
-    <% moves = get_moves(game) %>
-
-    <div>
-      <p>Moves:</p>
-      <div id="moves">
-      <% if moves %>
-        <% moves.each_with_index do |move, index| %>
-          <p><%= index + 1 %>. "<%= move %>"</p>
-        <% end %>
-      <% end %>
-      </div>
-    </div>
-
-    <div>
-      <p>Theme: <%= game.theme %></p>
-      <p>Mode: <%= game.mode %></p>
-      <p>Status: <%= game.status %></p>
-      <%= link_to "Surrender", games_path, class: "button2" %>
-    </div>
+  <div class="information-div"  >
+    <p>Theme: <%= game.theme %></p>
+    <p>Mode: <%= game.mode %></p>
+    <p>Status: <%= game.status %></p>
+    <%= link_to "Surrender", games_path, class: "button2" %>
   </div>
 </div>

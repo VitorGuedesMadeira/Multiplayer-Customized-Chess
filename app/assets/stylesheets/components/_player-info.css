@@ -5,7 +5,7 @@
 
 .player {
   display: flex;
-  gap: 1rem;
+  gap: 0.5rem;
 }
 
 .player-image  {
@@ -28,4 +28,15 @@
   background-color: #272522;
   color: white;
   border-radius: 0.25rem;
+}
+
+.timer.activated {
+  border: 3px solid #7d3131;
+}
+
+.name-and-pieces {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }

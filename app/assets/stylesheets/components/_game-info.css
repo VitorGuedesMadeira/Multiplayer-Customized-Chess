@@ -1,13 +1,14 @@
 .information {
   color: white;
-  height: 100%;
-  width: 100%;
+  width: 25rem;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 1px;
+  height: 100%;
 }
 
-.information div {
+.information .information-div {
   border-radius: 0.25rem;
   background-color: #272522;
   padding: 1rem;

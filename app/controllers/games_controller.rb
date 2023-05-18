@@ -1,17 +1,11 @@
 class GamesController < ApplicationController
-  before_action :set_game, only: %i[show edit update move_piece]
+  before_action :set_game, only: %i[show edit update move_piece check_positions promotion]
 
   def index
     @mini_games = Game.all.order(id: :asc)
   end
 
-  def show
-    @moves = @game.moves.map do |subarray|
-      letters = ('a'..'h').to_a
-      numbers = (1..8).to_a.reverse
-      [letters[subarray[0]], numbers[subarray[1]], letters[subarray[2]], numbers[subarray[3]]].join
-    end
-  end
+  def show; end
 
   def new
     @game = Game.new
@@ -32,6 +26,17 @@ class GamesController < ApplicationController
 
   def move_piece
     @game.move(params[:piece], params[:currentx].to_i, params[:currenty].to_i, params[:targetx].to_i, params[:targety].to_i)
+    redirect_to game_path(@game)
+  end
+
+  def check_positions
+    available_positions = @game.check_available_positions(params[:piece], params[:currentx].to_i, params[:currenty].to_i)
+    @game.check_check
+    render json: available_positions
+  end
+
+  def promotion
+    @game.set_promotion(params[:currenty], params[:currentx], params[:piece])
     redirect_to game_path(@game)
   end
 

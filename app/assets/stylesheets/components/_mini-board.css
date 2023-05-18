@@ -20,12 +20,17 @@
   color: transparent;
 }
 
+.mini-image {
+  width: 1rem;
+  height: 1rem;
+}
+
 .mini-row:nth-child(2n) .mini-cell:nth-child(2n) {
-  background-color: #769656;
+  background-color: #8c939b;
 }
 
 .mini-row:nth-child(2n-1) .mini-cell:nth-child(2n-1) {
-  background-color: #769656;
+  background-color: #8c939b;
 }
 
 .mini-cell.x {

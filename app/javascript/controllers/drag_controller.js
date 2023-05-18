@@ -4,8 +4,41 @@ import { Controller } from '@hotwired/stimulus';
 export default class extends Controller {
   dragStart(event) {
     const targetToBeMoved = event.target;
-    if (targetToBeMoved.innerText != '') {
+    if (targetToBeMoved.classList != 'cell ') {
       event.dataTransfer.setData('text/plain', event.target.id);
+
+      const gameID = event.target.id.split('-')[1];
+      const piece = event.target.id.split('-')[0];
+      const currentx = event.target.id.split('-')[2];
+      const currenty = event.target.id.split('-')[3];
+
+      const csrfToken = document
+        .querySelector("meta[name='csrf-token']")
+        .getAttribute('content');
+      // Make an HTTP request to call the move method in the Rails controller
+      fetch(`/games/${gameID}/check_positions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': csrfToken,
+        },
+        body: JSON.stringify({
+          piece,
+          currentx,
+          currenty,
+        }),
+      })
+        .then((response) => response.json()) // Extract JSON data from response
+        .then((data) => {
+          for (let i = 0; i < data.length; i++) {
+            let cell = document.querySelector(
+              `.board .row:nth-child(${data[i][1] + 1}) .cell:nth-child(${
+                data[i][0] + 1
+              })`
+            );
+            cell.classList.add('highlight');
+          }
+        });
     }
   }
 
@@ -30,35 +63,15 @@ export default class extends Controller {
 
   dragDrop(event) {
     event.target.classList.remove('over');
-    // Get the ID of the chess piece being dragged
-    const pieceId = event.dataTransfer.getData('text/plain');
+    event.target.classList.remove('highlight');
+    // Get the ID of the drag and drop positions (start and finish)
+    const currentID = event.dataTransfer.getData('text/plain');
+    const targetID = event.target.id;
+    console.log(currentID)
+    console.log(event.target)
+    console.log(targetID)
 
-    // Get the current and target squares for the chess piece
-    const currentSquare = document.getElementById(pieceId);
-    const targetSquare = event.target;
-
-    const currentID = currentSquare.id;
-    const targetID = targetSquare.id;
-    const gameID = targetID.split('-')[1];
-
-    // Move the chess piece to the target square
-    // if (
-    //   targetSquare !== currentSquare &&
-    //   targetSquare.innerText.split('_')[1] !==
-    //     currentSquare.innerText.split('_')[1]
-    // ) {
-    //   currentSquare.classList = 'cell';
-    //   targetSquare.classList = `cell ${currentSquare.innerText}`;
-    //   targetSquare.innerText = currentSquare.innerText;
-    //   currentSquare.id = `-${currentID.split('-')[1]}-${
-    //     currentID.split('-')[2]
-    //   }-${currentID.split('-')[3]}`;
-    //   targetSquare.id = `${currentSquare.innerText}-${targetID.split('-')[1]}-${
-    //     targetID.split('-')[2]
-    //   }-${targetID.split('-')[3]}`;
-    //   currentSquare.innerText = '';
-    // }
-
+    const gameID = currentID.split('-')[1];
     const piece = currentID.split('-')[0];
     const currentx = currentID.split('-')[2];
     const currenty = currentID.split('-')[3];

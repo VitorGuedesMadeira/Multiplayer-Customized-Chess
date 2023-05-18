@@ -1,4 +1,5 @@
 <%= turbo_stream_from @game %>
-<div class="game-container">
+
+<div id="<%= dom_id(@game) %>" class="game-container">
   <%= render @game %>
 </div>
