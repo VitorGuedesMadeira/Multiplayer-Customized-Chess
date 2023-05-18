@@ -1,9 +1,13 @@
 class Game < ApplicationRecord
+  has_many :users, through: :matches
+  has_many :matches
+
   validates :time, presence: true
   validates :theme, presence: true
   validates :mode, presence: true
 
   attribute :time, :integer, default: 0
+  attribute :players, :integer, default: 0
   attribute :theme, :integer, default: 0
   attribute :mode, :integer, default: 0
   attribute :turn, :integer, default: 0

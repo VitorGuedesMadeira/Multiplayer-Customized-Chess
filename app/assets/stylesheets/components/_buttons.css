@@ -15,6 +15,23 @@
   cursor: pointer;
 }
 
+.join-button {
+  text-align: center;
+  background-color: blue;
+  color: white;
+  text-decoration: none;
+  border-radius: 0.25rem;
+  padding: 0.5rem 0.75rem;
+  display: block;
+  font-weight: 700;
+  transition: 0.25s;
+  box-shadow: 0.25rem 0.25rem 1rem rgba(0, 0, 0, 0.2);
+  width: fit-content;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
 .button1:hover {
   background-color: #5f6975;
 }
@@ -37,5 +54,5 @@
 }
 
 .button2:hover {
-    background-color: #4e1c1c;
+  background-color: #4e1c1c;
 }

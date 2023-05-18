@@ -21,6 +21,11 @@
 
         <div class="mini-game-info">
           <p><%= link_to game.mode, game_path(game), class: "button1" %></p>
+          <% if game.mode == "one_vs_one" && game.players < 2 %>
+            <p><%= link_to 'Join', join_game_path(game), class: "join-button" %></p>
+          <% elsif game.matches.any? { |obj| obj.user_id == current_user.id }%>
+            <p><%= link_to 'Resume', game_path(game), class: "join-button" %></p>
+          <% end %>
           <p>Status: <%= game.status %></p>
           <p>Mode: <%= game.mode %></p>
           <p>Theme: <%= game.theme %></p>
