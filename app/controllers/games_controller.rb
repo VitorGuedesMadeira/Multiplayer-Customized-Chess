@@ -14,7 +14,7 @@ class GamesController < ApplicationController
 
   def create
     @game = Game.new(params_required)
-    @match = Match.new(game: @game, user: current_user)
+    @match = Match.new(game: @game, user: current_user, color: ['white', 'black'].sample)
     if @game.save && @match.save
       @game.increment!(:players)
       redirect_to game_path(@game), notice: 'Game was successfully created!'
@@ -28,7 +28,15 @@ class GamesController < ApplicationController
   def update; end
 
   def move_piece
-    @game.move(params[:piece], params[:currentx].to_i, params[:currenty].to_i, params[:targetx].to_i, params[:targety].to_i)
+    color = current_user.matches.where(game: @game)[0].color
+    p '#####################'
+    p color
+    if @game.turn.even? && color == 'white'
+      @game.move(params[:piece], params[:currentx].to_i, params[:currenty].to_i, params[:targetx].to_i, params[:targety].to_i)
+    end
+    if @game.turn.odd? && color == 'black'
+      @game.move(params[:piece], params[:currentx].to_i, params[:currenty].to_i, params[:targetx].to_i, params[:targety].to_i)
+    end
     redirect_to game_path(@game)
   end
 
@@ -46,6 +54,10 @@ class GamesController < ApplicationController
   def join
     if !@game.matches.any? { |obj| obj.user_id == current_user.id }
       @game.increment!(:players)
+      colors = @game.matches.map { |obj| obj.color }
+      all_colors = Match.colors.keys
+      available_colors = all_colors - colors
+      Match.create!(game: @game, user: current_user, color: available_colors.sample)
       if @game.mode == "one_vs_one" && @game.players == 2
         @game.status = "ongoing"
         @game.save

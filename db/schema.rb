@@ -31,6 +31,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_18_174559) do
   create_table "matches", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "game_id", null: false
+    t.integer "color"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["game_id"], name: "index_matches_on_game_id"

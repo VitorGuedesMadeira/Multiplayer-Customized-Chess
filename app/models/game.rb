@@ -211,6 +211,7 @@ class Game < ApplicationRecord
   end
 
   def move(piece, startx, starty, finishx, finishy)
+    #piece_1 piece_2
     if self.promotion.empty?
       if turn.even?
         return if piece.split('_')[1] == '2'
