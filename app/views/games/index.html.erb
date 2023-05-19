@@ -9,7 +9,7 @@
             <% row.each do |cell| %>
               <div class="mini-cell <%= cell %>">
                 <% if !cell.empty? && cell != 'x' %>
-                  <%= image_tag("pieces/#{cell}", class: "mini-image") %>
+                  <%= image_tag("pieces/#{cell}.png", class: "mini-image") %>
                 <% else %>
                   <%= cell %>
                 <% end %>
