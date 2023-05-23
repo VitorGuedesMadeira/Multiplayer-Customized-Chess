@@ -1,5 +1,6 @@
 <% moves = get_moves(game) %>
-
+<% matches = game.matches %>
+<% black_player = 0%>
 <div class="game">
   <div class="player-info">
     <div class="player">
@@ -7,7 +8,8 @@
         Image
       </div>
       <div class="name-and-pieces">
-        <p>Username</p>
+        <% user_match = matches.find { |obj| obj[:color] == "black" } %>
+        <p><%= User.find(user_match.user_id).email %></p>
         <div class="killed-pieces">
           <% moves.each do |move| %>
             <% if move[2] != '' && move[2].split('_')[1] != '2' %>
@@ -32,7 +34,7 @@
     <% finish_x = game.moves[-1][2] %>
     <% finish_y = game.moves[-1][3] %>
   <% end %>
-  
+
   <div class="board" data-controller="drag">
     <% game.state.each_with_index do |row, row_index| %>
       <div class='row'>
@@ -89,7 +91,8 @@
         Image
       </div>
       <div class="name-and-pieces">
-        <p>Username</p>
+        <% user_match = matches.find { |obj| obj[:color] == "white" } %>
+        <p><%= User.find(user_match.user_id).email %></p>
         <div class="killed-pieces">
           <% moves.each do |move| %>
             <% if move[2] != '' && move[2].split('_')[1] != '1' %>
