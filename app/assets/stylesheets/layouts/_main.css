@@ -3,5 +3,6 @@ main {
   height: 100vh;
   overflow: auto;
   background-color: #312E2B;
+  background-image: url("https://www.transparenttextures.com/patterns/binding-dark.png");
   padding: 0.75rem;
 }

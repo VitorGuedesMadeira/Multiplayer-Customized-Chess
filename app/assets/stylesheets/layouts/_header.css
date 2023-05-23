@@ -1,8 +1,8 @@
 header {
   display: flex;
   flex-direction: column;
-  background-color: #272522;
+  background-image: linear-gradient(315deg, #272522, #161514);
   color: white;
   height: 100vh;
-  width: 15%;
+  width: 20%;
 }

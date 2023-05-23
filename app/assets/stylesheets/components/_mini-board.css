@@ -1,7 +1,6 @@
 .mini-board {
   display: flex;
   flex-direction: column;
-  border-radius: 0.25rem;
   overflow: hidden;
 }
 
@@ -34,13 +33,13 @@
 }
 
 .mini-cell.x {
-  background-color: #272522;
+  background-image: radial-gradient(circle at center, #272522, #272522);
 }
 
 .mini-row:nth-child(2n) .mini-cell.x:nth-child(2n) {
-  background-color: #272522;
+  background-image: radial-gradient(circle at center, #272522, #272522);
 }
 
 .mini-row:nth-child(2n-1) .mini-cell.x:nth-child(2n-1) {
-  background-color: #272522;
+  background-image: radial-gradient(circle at center, #272522, #272522);
 }

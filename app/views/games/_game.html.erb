@@ -11,8 +11,8 @@
   <% white_player = User.find(white_player_match.user_id) %>
 <% end %>
 
-<div class="game">
-  <div class="player-info">
+<div class="<%= current_user == white_player ? "game" : "game inverted" %>">
+  <div class="<%= current_user == white_player ? "player-info" : "player-info inverted" %>">
     <div class="player">
       <div class="player-image">
         Image
@@ -46,7 +46,7 @@
         <% row.each_with_index do |cell, cell_index| %>
         <div class="cell <%= cell %> <%= finish_x == cell_index && finish_y == row_index ? 'last-move' : ''%>" id=<%= "#{cell}-#{game.id}-#{cell_index}-#{row_index}" %> data-action="dragstart->drag#dragStart dragover->drag#dragOver dragenter->drag#dragEnter drop->drag#dragDrop dragend->drag#dragEnd dragleave->drag#dragLeave">
           <% if !cell.empty? && cell != 'x' %>
-            <%= image_tag("pieces/#{cell}.png", class: "test", id: "#{cell}-#{game.id}-#{cell_index}-#{row_index}", draggable: "true") %>
+            <%= image_tag("pieces/#{cell}.png", class: current_user == white_player ? "test" : "test inverted", id: "#{cell}-#{game.id}-#{cell_index}-#{row_index}", draggable: "true") %>
           <% else %>
             <%= cell %>
           <% end %>
@@ -90,7 +90,7 @@
     <% end %>
   </div>
 
-  <div class="player-info">
+  <div class="<%= current_user == white_player ? "player-info" : "player-info inverted" %>">
     <div class="player">
       <div class="player-image">
         Image
@@ -117,11 +117,10 @@
 
 <div class="information">
   <div class="information-div">
-    <h1>Game #<%= game.id %> <%= game.status %></h1>
-    <p>Promotion: <%= game.promotion %></p>
+    <h1>Game #<%= game.id %></h1>
+    <h2><%= game.status %></h2>
     <p>Players: <%= game.players %></p>
     <p>Turn: <%= game.turn % 2 == 0 ? "White" : "Black" %></p>
-    <p>Time: <%= game.time %></p>
   </div>
 
   <div class="information-div">
@@ -159,9 +158,6 @@
   </div>
 
   <div class="information-div"  >
-    <p>Theme: <%= game.theme %></p>
-    <p>Mode: <%= game.mode %></p>
-    <p>Status: <%= game.status %></p>
     <%= link_to "Surrender", games_path, class: "button2" %>
   </div>
 </div>

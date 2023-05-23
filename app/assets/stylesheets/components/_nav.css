@@ -20,6 +20,7 @@ nav ul a {
   text-decoration: none;
   width: 100%;
   padding: 0.75rem;
+  font-weight: 800;
 }
 
 nav ul a:hover {

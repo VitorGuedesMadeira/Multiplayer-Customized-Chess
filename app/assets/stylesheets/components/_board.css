@@ -18,17 +18,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #8c939b;
+  background-image: radial-gradient(circle at center, #8c939b, #727a85);
   color: transparent;
   position: relative;
 }
 
 .row:nth-child(2n) .cell:nth-child(2n) {
-  background-color: whitesmoke;
+  background-image: radial-gradient(circle at center, white, rgb(206, 206, 206));
 }
 
 .row:nth-child(2n-1) .cell:nth-child(2n-1) {
-  background-color: whitesmoke;
+  background-image: radial-gradient(circle at center, white, rgb(206, 206, 206));
 }
 
 .highlight {
@@ -87,15 +87,15 @@
 }
 
 .x {
-  background-color: #312e2b;
+  background-image: radial-gradient(circle at center, #312e2b, #312e2b);
 }
 
 .row:nth-child(2n) .cell.x:nth-child(2n) {
-  background-color: #312e2b;
+  background-image: radial-gradient(circle at center, #312e2b, #312e2b);
 }
 
 .row:nth-child(2n-1) .cell.x:nth-child(2n-1) {
-  background-color: #312e2b;
+  background-image: radial-gradient(circle at center, #312e2b, #312e2b);
 }
 
 .promotion-selected {
@@ -142,6 +142,11 @@
   cursor: grab;
   height: 100%;
   width: 100%;
+  transition: 0.25s;
+}
+
+.test:hover {
+  filter: brightness(0.85);
 }
 
 .killed-pieces {
@@ -155,7 +160,7 @@
 }
 
 .last-move {
-  background-color: goldenrod !important;
+  background-image: radial-gradient(circle at center, rgb(250, 198, 66), rgb(224, 176, 52)) !important;
 }
 
 .inverted {
