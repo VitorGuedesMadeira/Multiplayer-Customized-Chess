@@ -1,6 +1,16 @@
 <% moves = get_moves(game) %>
 <% matches = game.matches %>
-<% black_player = 0%>
+
+<% if matches.find { |obj| obj[:color] == "black" } %>
+  <% black_player_match = matches.find { |obj| obj[:color] == "black" } %>
+  <% black_player = User.find(black_player_match.user_id) %>
+<% end %>
+
+<% if matches.find { |obj| obj[:color] == "white" } %>
+  <% white_player_match = matches.find { |obj| obj[:color] == "white" } %>
+  <% white_player = User.find(white_player_match.user_id) %>
+<% end %>
+
 <div class="game">
   <div class="player-info">
     <div class="player">
@@ -8,8 +18,7 @@
         Image
       </div>
       <div class="name-and-pieces">
-        <% user_match = matches.find { |obj| obj[:color] == "black" } %>
-        <p><%= User.find(user_match.user_id).email %></p>
+        <p><%= black_player ? black_player.name : "Waiting for opponent" %></p>
         <div class="killed-pieces">
           <% moves.each do |move| %>
             <% if move[2] != '' && move[2].split('_')[1] != '2' %>
@@ -20,14 +29,10 @@
       </div>
     </div>
 
-      <div class="timer">
-      <div>
-        <button class="start-timer1">Start Countdown</button>
-        <button class="stop-timer1">Stop Countdown</button>
+    <div class="<%= game.turn.odd? ? "timer activated" : "timer" %>">
+      <div id="countdown1">
       </div>
-        <div id="countdown1"></div>
-      </div>
-
+    </div>
   </div>
 
   <%unless game.moves.empty?%>
@@ -91,8 +96,7 @@
         Image
       </div>
       <div class="name-and-pieces">
-        <% user_match = matches.find { |obj| obj[:color] == "white" } %>
-        <p><%= User.find(user_match.user_id).email %></p>
+        <p><%= white_player ? white_player.name : "Waiting for opponent" %></p>
         <div class="killed-pieces">
           <% moves.each do |move| %>
             <% if move[2] != '' && move[2].split('_')[1] != '1' %>
@@ -103,13 +107,10 @@
       </div>
     </div>
 
-      <div class="timer">
-      <div>
-        <button class="start-timer2">Start Countdown</button>
-        <button class="stop-timer2">Stop Countdown</button>
+    <div class="<%= game.turn.even? ? "timer activated" : "timer" %>">
+      <div id="countdown2">
       </div>
-        <div id="countdown2"></div>
-      </div>
+    </div>
 
   </div>
 </div>

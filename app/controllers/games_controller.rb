@@ -29,15 +29,15 @@ class GamesController < ApplicationController
 
   def move_piece
     color = current_user.matches.where(game: @game)[0].color
-    p '#####################'
-    p color
-    if @game.turn.even? && color == 'white'
-      @game.move(params[:piece], params[:currentx].to_i, params[:currenty].to_i, params[:targetx].to_i, params[:targety].to_i)
+    if @game.status == "ongoing"
+      if @game.turn.even? && color == 'white'
+        @game.move(params[:piece], params[:currentx].to_i, params[:currenty].to_i, params[:targetx].to_i, params[:targety].to_i)
+      end
+      if @game.turn.odd? && color == 'black'
+        @game.move(params[:piece], params[:currentx].to_i, params[:currenty].to_i, params[:targetx].to_i, params[:targety].to_i)
+      end
+      redirect_to game_path(@game)
     end
-    if @game.turn.odd? && color == 'black'
-      @game.move(params[:piece], params[:currentx].to_i, params[:currenty].to_i, params[:targetx].to_i, params[:targety].to_i)
-    end
-    redirect_to game_path(@game)
   end
 
   def check_positions

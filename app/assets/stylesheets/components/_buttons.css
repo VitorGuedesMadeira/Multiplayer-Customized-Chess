@@ -13,11 +13,12 @@
   border: none;
   font-size: 1rem;
   cursor: pointer;
+  min-width: 150px;
 }
 
 .join-button {
   text-align: center;
-  background-color: blue;
+  background-color: rgb(0, 155, 8);
   color: white;
   text-decoration: none;
   border-radius: 0.25rem;
@@ -30,6 +31,11 @@
   border: none;
   font-size: 1rem;
   cursor: pointer;
+  min-width: 150px;
+}
+
+.join-button:hover {
+  background-color: rgb(0, 128, 6);
 }
 
 .button1:hover {
@@ -51,6 +57,7 @@
   border: none;
   font-size: 1rem;
   cursor: pointer;
+  min-width: 150px;
 }
 
 .button2:hover {

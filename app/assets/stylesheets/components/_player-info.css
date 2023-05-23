@@ -30,8 +30,8 @@
   border-radius: 0.25rem;
 }
 
-.timer.activated {
-  border: 3px solid #7d3131;
+.activated {
+  border: 3px solid rgb(0, 155, 8);
 }
 
 .name-and-pieces {
