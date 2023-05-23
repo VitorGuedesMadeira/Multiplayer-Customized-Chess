@@ -28,11 +28,16 @@
 
   </div>
 
+  <%unless game.moves.empty?%>
+    <% finish_x = game.moves[-1][2] %>
+    <% finish_y = game.moves[-1][3] %>
+  <% end %>
+  
   <div class="board" data-controller="drag">
     <% game.state.each_with_index do |row, row_index| %>
       <div class='row'>
         <% row.each_with_index do |cell, cell_index| %>
-        <div class="cell <%= cell %>" id=<%= "#{cell}-#{game.id}-#{cell_index}-#{row_index}" %> data-action="dragstart->drag#dragStart dragover->drag#dragOver dragenter->drag#dragEnter drop->drag#dragDrop dragend->drag#dragEnd dragleave->drag#dragLeave">
+        <div class="cell <%= cell %> <%= finish_x == cell_index && finish_y == row_index ? 'last-move' : ''%>" id=<%= "#{cell}-#{game.id}-#{cell_index}-#{row_index}" %> data-action="dragstart->drag#dragStart dragover->drag#dragOver dragenter->drag#dragEnter drop->drag#dragDrop dragend->drag#dragEnd dragleave->drag#dragLeave">
           <% if !cell.empty? && cell != 'x' %>
             <%= image_tag("pieces/#{cell}.png", class: "test", id: "#{cell}-#{game.id}-#{cell_index}-#{row_index}", draggable: "true") %>
           <% else %>

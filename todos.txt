@@ -1,0 +1,4 @@
+- hightlight last move
+- which color you are
+- be able to move when game starts
+- fix timer

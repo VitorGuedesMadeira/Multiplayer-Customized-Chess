@@ -36,7 +36,7 @@
 }
 
 .highlight::after {
-  content: "";
+  content: '';
   position: absolute;
   width: 20px;
   height: 20px;
@@ -71,7 +71,7 @@
 
 @keyframes fade {
   from {
-    opacity: 0
+    opacity: 0;
   }
 
   to {
@@ -152,4 +152,8 @@
   width: 1.25rem;
   height: 1.25rem;
   margin-left: -0.25rem;
+}
+
+.last-move {
+  background-color: goldenrod !important;
 }
